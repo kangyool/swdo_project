@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.swdo.test.dao.ProductMapper">
+
+<insert id="productInsert" parameterType="product">
+	insert into 
+		SWDO_product_tb(
+			productId
+			,productDisplayName
+		    ,referenceImageId
+		    ,gcsUri
+		    ,uri
+		)values(
+			#{productId}
+			,#{productDisplayName}
+		    ,#{referenceImageId}
+		    ,#{gcsUri}
+		    ,#{uri}
+		)
+</insert>
+
+<delete id="productDelete" parameterType="String">
+	delete from
+		SWDO_product_tb
+	where
+		productId = #{productId}
+</delete>
+
+<select id="productTotalRecordsCount" parameterType="String" resultType="int">
+	select
+		count(*)
+	from
+		SWDO_product_tb
+	<if test="_parameter != null">
+	where
+		upper(productDisplayName) like '%'||upper(#{searchText})||'%'
+	</if>
+	
+</select>
+
+<select id="productSelectAll" parameterType="String" resultType="product">
+	select
+		productId
+		,productDisplayName
+		,referenceImageId
+		,gcsUri
+		,uri
+	from
+		SWDO_product_tb
+	<if test="_parameter != null"> <!-- 매개 변수 하나 전달 || VO를 통하지 않고 받을 때 -->
+	
+	where
+		upper(productDisplayName) like '%'||upper(#{searchText})||'%' 
+	
+	</if>
+	
+	order by 
+		productDisplayName desc
+</select>
+
+<insert id="imageInsert" parameterType="image">
+	insert into 
+		SWDO_userImage_tb(
+			originalFileName
+			,savedFileName
+		    ,savedFilePath
+		)values(
+			#{originalFileName}
+			,#{savedFileName}
+		    ,#{savedFilePath}
+		)
+</insert>
+
+<select id="productTotalRecordsCount_imageSearch" parameterType="java.util.ArrayList" resultType="int">
+	select
+		count(*)
+	from
+		SWDO_product_tb
+	where productId in (
+	  <foreach collection="list" item="item" index="index" separator=",">
+            #{item}
+      </foreach>
+    )
+</select>
+
+<select id="productSelectAll_imageSearch" parameterType="java.util.ArrayList" resultType="product">
+	select
+		productId
+		,productDisplayName
+		,referenceImageId
+		,gcsUri
+		,uri
+	from
+		SWDO_product_tb
+	where productId in (
+	  <foreach collection="list" item="item" index="index" separator=",">
+            #{item}
+      </foreach>
+    )
+    order by decode(productId,
+		<foreach collection="list" item="item" index="index" separator="," close=")">
+    		 #{item}, ${index}
+		</foreach>
+    
+
+</select>
+
+<!-- <select id="userSelectAll" resultType="user">
+	select  
+		user_no 
+		,user_id
+		,user_pw
+		,user_name
+		,to_char(user_indate, 'YYYY-MM-DD') as user_indate
+	from
+		SWDO_user_tb
+</select>
+
+<delete id="userDelete" parameterType="user">
+	delete from
+		SWDO_user_tb
+	where
+		user_id = #{user_id}
+</delete>
+
+<select id="userSelectOne" parameterType="user" resultType="user">
+	select
+		user_no 
+		,user_id
+		,user_pw
+		,user_name
+		,to_char(user_indate, 'YYYY-MM-DD') as user_indate
+	from
+		SWDO_user_tb
+	where
+		user_id = #{user_id}
+</select>
+
+<update id="userUpdate" parameterType="user">
+	update
+		SWDO_user_tb
+	set
+		user_pw = #{user_pw}
+		,user_name = #{user_name}
+	where
+		user_id = #{user_id}
+</update>
+
+<select id="userLogin" parameterType="user" resultType="user">
+	select
+		user_no 
+		,user_id
+		,user_pw
+		,user_name
+		,to_char(user_indate, 'YYYY-MM-DD') as user_indate
+	from
+		SWDO_user_tb
+	where
+		user_id = #{user_id}
+</select> -->
+
+
+</mapper>
