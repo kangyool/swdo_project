@@ -24,7 +24,7 @@ function userImageUpload(){
 </script>	
 </head>
 <body>
-
+<h1> github_test1</h1>
 	<div style="float:right">
 		<ul>		
 			<c:choose>
