@@ -3,7 +3,21 @@
     pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>Home</title>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="./../../resources/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="./../../resources/img/favicon.ico">
+
+    <link rel="stylesheet" href="./../../resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./../../resources/css/templatemo.css">
+    <link rel="stylesheet" href="./../../resources/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="./../../resources/css/fontawesome.min.css">
+    
 <script type="text/javascript">
 function searchProduct(page){
 	document.getElementById("currentPage").value = page;
@@ -71,6 +85,19 @@ function userImageUpload(){
 				<input type = "file" name="upload" id="upload" onchange="userImageUpload()"> 
 			</form>
 	</div>
+	
+	<div class="bg-white" id="templatemo_search">
+        <div class="">
+            <form action="" method="get" class="border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
