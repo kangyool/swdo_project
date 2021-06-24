@@ -35,3 +35,9 @@ Custom Css
 .display-none{
 	display: none;
 }
+
+.focus-border-none:focus { 	
+    border: none;
+    outline: none;
+}
+
