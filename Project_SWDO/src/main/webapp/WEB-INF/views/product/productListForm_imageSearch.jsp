@@ -10,6 +10,7 @@
 <title>[ 제품 목록 ]</title>
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
+var flag=true;
 
 function moveToHome(){
 	location.href = "/";
@@ -65,26 +66,30 @@ $(function(){
 
 		console.log("userImage : " + userImage);
 		
-		if((documentHeight-1 < scrollHeight) & (scrollHeight <= documentHeight) & currentPage <= totalPageCount){ 
+		if((scrollHeight) >= (documentHeight - 300) && currentPage <= totalPageCount){ 
 			console.log("currentPage : " + currentPage);
-			
-			$.ajax({
 
-				url : "/product/imageSearch_rest",
-				type : "get",
-				data : {
-					currentPage : currentPage,
-					userImage : userImage
-				},
-				dataType : "json",
-				success : function(data){
-					console.log(data);
-					productSelectAll(data);
-				},
-				error : function(e){
-					console.log(e);
-				}
-			})
+			if (flag) {
+				flag = false;
+				$.ajax({
+	
+					url : "/product/imageSearch_rest",
+					type : "get",
+					data : {
+						currentPage : currentPage,
+						userImage : userImage
+					},
+					dataType : "json",
+					success : function(data){
+						console.log(data);
+						productSelectAll(data);
+						flag = true;
+					},
+					error : function(e){
+						console.log(e);
+					}
+				})
+			}
 		}
 	});
 });

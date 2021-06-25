@@ -62,9 +62,10 @@ $(function(){
 		console.log("--------------------------------------------")
 		console.log("scrollHeight : " + scrollHeight);
 		console.log("documentHeight : " + documentHeight);
-		console.log("currentPage! :" + currentPage);
+		console.log("currentPage! : " + currentPage);
+		console.log("totalPageCount : " + totalPageCount);
 		
-		if((scrollHeight) >= (documentHeight - 300)){ 
+		if((scrollHeight) >= (documentHeight - 300) && currentPage <= totalPageCount){ 
 			console.log("currentPage : " + currentPage);
 
 			if (flag) {

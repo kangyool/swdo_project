@@ -20,7 +20,6 @@
 
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
-
 $(function(){
 	$('#btn-upload').on("click", function(){
 		$("#upload").click();
@@ -30,24 +29,16 @@ $(function(){
 function changeValue(obj){
 	userImageUpload();
 }
-
-
 function searchProduct(page){
 	document.getElementById("currentPage").value = page;
 	var searchForm = document.getElementById("searchForm");
-
 	searchForm.submit();
 }
-
 function userImageUpload(){
-
 	var userImageUpload = document.getElementById("userImageUpload");
-
 	userImageUpload.submit();
-
 	document.getElementById("upload").value = "";
 } 
-
 </script>	
 </head>
 <body>
@@ -85,10 +76,10 @@ function userImageUpload(){
 			</form>
 	</div>  -->
 	
-	<nav class="navbar justify-content-flex-end"> 
+	<nav class="navbar cc-justify-content-flex-end"> 
 	
-		<div class="display-flex" style=""> </div>
-       	<div class="display-flex justify-content-space-between" id="" style="margin: 15px 50px">                
+		<div class="cc-display-flex" style=""> </div>
+       	<div class="cc-display-flex cc-justify-content-space-between" id="" style="margin: 15px 50px">                
 
                     <!-- <a class="" href="#" style="font-size: 35px; margin:0 5px" >
                         <i class="fa fa-fw fa-search text-dark"></i>
@@ -138,22 +129,22 @@ function userImageUpload(){
          </div>
     </nav>
 	
-	<div class="display-flex disposition-center flex-direction-column" >
-		<div class="display-flex">
+	<div class="cc-display-flex cc-disposition-center cc-flex-direction-column" >
+		<div class="cc-display-flex">
 			<img alt="" src="./../../resources/img/apple-icon.png" height="100px" width="135px">
 		</div>
-	    <div class="display-flex flex-wrap-nowrap">
+	    <div class="cc-display-flex cc-flex-wrap-nowrap">
             
-            <form action="/product/productListForm" method="get" id="searchForm" class="display-flex" style="width: 370px">
-				<input type="text" name="searchText" placeholder="   Search ..." class="focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
+            <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex" style="width: 370px">
+				<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
 				<input type="hidden" name="currentPage" id="currentPage">
 				<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
 					<i class="fa fa-fw fa-search" style="color: #202124"></i>
 				</button>
 			</form>
             
-            <form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="" class="display-flex">
-				<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="display-none"> 
+            <form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="" class="cc-display-flex">
+				<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="cc-display-none"> 
 				<button type="button" class="bg-warning" id="btn-upload" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
                     <i class="fa fa-fw fa-camera-retro" style="color: #202124"></i>					
 				</button>
