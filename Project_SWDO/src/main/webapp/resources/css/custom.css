@@ -26,6 +26,10 @@ Custom css
 	flex-direction: column;
 }
 
+.cc-flex-direction-row{
+	flex-direction: row;
+}
+
 .cc-disposition-center{
 	align-items: center;
 	justify-content: center;

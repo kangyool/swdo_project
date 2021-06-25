@@ -133,8 +133,8 @@ function userImageUpload(){
 		<div class="cc-display-flex">
 			<img alt="" src="./../../resources/img/apple-icon.png" height="100px" width="135px">
 		</div>
+		
 	    <div class="cc-display-flex cc-flex-wrap-nowrap">
-            
             <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex" style="width: 370px">
 				<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
 				<input type="hidden" name="currentPage" id="currentPage">
