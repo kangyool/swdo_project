@@ -64,7 +64,7 @@ public class UserService {
 			path = "redirect:/user/updateForm?user_id=" + user.getUser_id();
 		}else {
 			System.out.println("회원정보 갱신 성공");
-			path = "redirect:/user/listForm";
+			path = "redirect:/user/detail?user_id=" + user.getUser_id();
 		}
 		
 		return path;

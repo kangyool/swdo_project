@@ -44,7 +44,8 @@ public class UserViewController {
 	public String delete(UserVO user) {
 		
 		service.userDelete(user);
-		return "redirect:/user/listForm";
+		service.userLogout();
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)

@@ -37,6 +37,8 @@
 	<if test="_parameter != null">
 	where
 		upper(productDisplayName) like '%'||upper(#{searchText})||'%'
+		or
+		upper(productId) like '%'||upper(#{searchText})||'%' 
 	</if>
 	
 </select>
@@ -54,6 +56,8 @@
 	
 	where
 		upper(productDisplayName) like '%'||upper(#{searchText})||'%' 
+		or
+		upper(productId) like '%'||upper(#{searchText})||'%' 
 	
 	</if>
 	

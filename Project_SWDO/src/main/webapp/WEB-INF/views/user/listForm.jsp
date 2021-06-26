@@ -11,6 +11,11 @@ function userDelete(user_id){
 	location.href = "/user/delete?user_id=" + user_id;
 }
 
+function userDelete(user_id){
+	var flag = confirm("정말로 삭제하시겠습니까?")
+	if(flag) location.href = "/user/delete?user_id=" + user_id;
+}
+
 </script>
 </head>
 <body>

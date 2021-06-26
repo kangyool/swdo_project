@@ -105,7 +105,7 @@ function userImageUpload(){
 						<i class="fa fa-fw fa-sign-out-alt text-dark" title="로그아웃"></i>
 					</a>
 				<c:if test="${sessionScope.loginVO.user_id ne 'admin'}">
-					<a href="user/detail" style="font-size: 35px; margin:0 5px" title="회원 정보">					
+					<a href="user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px" title="회원 정보">					
 						<i class="fa fa-fw fa-user-edit text-dark" title="회원 정보"></i>
 					</a>
 				</c:if>	
