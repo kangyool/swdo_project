@@ -53,19 +53,34 @@ $(function(){
 	function productSelectAll(data){
 
 		console.log(data);
-		var content = '<div style="display: block">';
+		var content = '';
 
 		$.each(data.productList, function(index, item){
-			content += '<img name="' + item.productDisplayName + '"alt="" src="' + item.uri + '"width = 300 height = 500>';
-			content += '<a style="display:block">' + item.productDisplayName + '</a>';
-			content += '</div>';
+			content += '<div class="col-md-4">';
+			content += '<div class="card mb-4 product-wap rounded-0">'
+			content += '<div class="card rounded-0">'
+			content += '<a href="?????????"><img class="card-img rounded-0 img-fluid" name="' + item.productDisplayName + '" id="' + item.productId + '" alt="" src="' + item.uri + '"></a>';
+			content += '<div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">'
+			content += '<ul class="list-unstyled"> <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li> <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li> <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li> </ul>'
+			content += '</div>'
+			content += '</div>'
+			content += '<div class="card-body">'
+			content += '<a href="??????????" class="h3 text-decoration-none">' + item.productDisplayName + '</a>'
+			content += '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0"> <li>M/L/X/XL</li> <li class="pt-2"> <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span> </li> </ul>'
+			content += '<ul class="list-unstyled d-flex justify-content-center mb-1"><li><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-muted fa fa-star"></i><i class="text-muted fa fa-star"></i></li></ul>'
+			content += '<p class="text-center mb-0">$250.00</p>'
+			content += '</div>'
+			content += '</div>'
+			content += '</div>'			
+										 			
 		});
 
-		$("#productDiv").append(content);
+		$("#productDisplay").append(content);
 		$("#cp").val(data.navi.currentPage);
 
 	}
-	
+
+
 	$(window).scroll(function(){
 		
 		var scrollHeight = $(window).scrollTop() + $(window).height();
@@ -141,7 +156,7 @@ $(function(){
     <nav class="navbar navbar-expand-lg navbar-light shadow cc-flex-wrap-nowrap">
         <div class="container d-flex justify-content-between align-items-center">
 				<div class="cc-display-flex " style="flex-grow: 1">
-		            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+		            <a class="navbar-brand text-success logo h1 align-self-center" href="/">
 		                Zay
 		            </a> 
 				</div>
@@ -197,7 +212,7 @@ $(function(){
     
     <!-- Start Content -->
     <div class="container py-5">
-        <div class="row">
+        <div class="row" >
 
             <div class="col-lg-3">
                 <h1 class="h2 pb-4">Categories</h1>
@@ -212,7 +227,7 @@ $(function(){
                             <li><a class="text-decoration-none" href="#">Women</a></li>
                         </ul>
                     </li>
-                    <li class="pb-3">
+                   <!--  <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
                             Sale
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
@@ -221,7 +236,7 @@ $(function(){
                             <li><a class="text-decoration-none" href="#">Sport</a></li>
                             <li><a class="text-decoration-none" href="#">Luxury</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
                             Product
@@ -229,54 +244,56 @@ $(function(){
                         </a>
                         <ul id="collapseThree" class="collapse list-unstyled pl-3">
                             <li><a class="text-decoration-none" href="#">Bag</a></li>
-                            <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                            <li><a class="text-decoration-none" href="#">Sunglass</a></li>
+                            <li><a class="text-decoration-none" href="#">Shoes</a></li>
+                            <li><a class="text-decoration-none" href="#">Accessory</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
 
             <div class="col-lg-9">
-               <div class="row">
+               <div class="row" id="productDisplay">
                
-                    <div class="col-md-4"> <!-- 여기부터 1개 아이템 시작 -->
-                        <div class="card mb-4 product-wap rounded-0">
-                            <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="assets/img/shop_01.jpg"> <!-- a태그 걸기, 이미지 부분 -->
-                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                    <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a> <!-- 이름 부분 -->
-                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    <li>M/L/X/XL</li>
-                                    <li class="pt-2">
-                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                    </li>
-                                </ul>
-                                <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                    <li>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-muted fa fa-star"></i>
-                                        <i class="text-muted fa fa-star"></i>
-                                    </li>
-                                </ul>
-                                <p class="text-center mb-0">$250.00</p>
-                            </div>
-                        </div>
-                    </div> <!-- 1개 아이템 끝 -->
-                    
+	               <c:forEach var="productList" items="${productList }">
+	                    <div class="col-md-4"> <!-- 여기부터 1개 아이템 시작 -->
+	                        <div class="card mb-4 product-wap rounded-0">
+	                            <div class="card rounded-0">
+	                                <a href="????????????"><img class="card-img rounded-0 img-fluid" name="${productList.productDisplayName }" id="${productList.productId }" src="${productList.uri }"></a>  <!-- 이미지 부분 -->
+	                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+	                                    <ul class="list-unstyled">
+	                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+	                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+	                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+	                                    </ul>
+	                                </div>
+	                            </div>
+	                            <div class="card-body">
+	                                <a href="???????????" class="h3 text-decoration-none">${productList.productDisplayName }</a> <!-- 이름 부분 -->
+	                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+	                                    <li>M/L/X/XL</li>
+	                                    <li class="pt-2">
+	                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+	                                    </li>
+	                                </ul>
+	                                <ul class="list-unstyled d-flex justify-content-center mb-1">
+	                                    <li>
+	                                        <i class="text-warning fa fa-star"></i>
+	                                        <i class="text-warning fa fa-star"></i>
+	                                        <i class="text-warning fa fa-star"></i>
+	                                        <i class="text-muted fa fa-star"></i>
+	                                        <i class="text-muted fa fa-star"></i>
+	                                    </li>
+	                                </ul>
+	                                <p class="text-center mb-0">$250.00</p>
+	                            </div>
+	                        </div>
+	                    </div> <!-- 1개 아이템 끝 -->
+	                </c:forEach>    
+	                
                 </div>
             </div>
             
@@ -288,48 +305,34 @@ $(function(){
 
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-	            <div class="w-100 pt-1 mb-5 text-right cc-display-flex ">
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-lg cc-display-flex cc-flex-direction-column" role="document">
+	            
+	            
+	            <div class="w-100 pt-1 mb-5 text-right cc-display-flex ">                
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
 	            </div>
 
-	                <div class="cc-display-flex cc-flex-wrap-nowrap">
-	                     <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: 370px">
-							<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
-							<input type="hidden" name="currentPage" id="currentPage">
-							<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
-								<i class="fa fa-fw fa-search" style="color: #202124"></i>
-							</button>
-						</form>
-	            
-		           		 <form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="width:0" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row">
-							<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="cc-display-none"> 
-							<button type="button" class="bg-warning" id="btn-upload" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
-			                    <i class="fa fa-fw fa-camera-retro" style="color: #202124"></i>					
-							</button>
-						</form>
-	                </div>
+                <div class="cc-display-flex cc-flex-wrap-nowrap">
+                	<div class="cc-display-flex" style="flex-grow:0.5"></div>
+                		
+                     <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: auto">
+						<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
+						<input type="hidden" name="currentPage" id="currentPage">
+						<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
+							<i class="fa fa-fw fa-search" style="color: #202124"></i>
+						</button>
+					</form>
+            
+	           		 <form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="width:0" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row">
+						<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="cc-display-none"> 
+						<button type="button" class="bg-warning" id="btn-upload" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
+		                    <i class="fa fa-fw fa-camera-retro" style="color: #202124"></i>					
+						</button>
+					</form>
+                </div>
          		
         </div>
     </div>
-
-	
-	<!-- <div style="float:right">
-			<form action="/product/productListForm" method="get" id="searchForm" style="display:inline">
-				<input type="text" name="searchText">
-				<input type="hidden" name="currentPage" id="currentPage">
-				<input type="button" value="검색" onclick="searchProduct(1)">
-			</form>
-			
-			<form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="display:inline">
-				<input type = "file" name="upload" id="upload" onchange="userImageUpload()"> 
-			</form>
-			
-			<input type="button" value="홈" onclick="moveToHome()"style="display:inline">
-	</div> -->
-
-
-
 
 	<input type="hidden" value="${searchText }" id="st">
 	<input type="hidden" value="${navi.currentPage }" id="cp">	
@@ -350,7 +353,7 @@ $(function(){
 	</div> -->
 	
 
-	<div id = "productDiv">
+	<%-- <div id = "productDiv">
 	
 		<c:forEach var="productList" items="${productList }">
 			
@@ -361,7 +364,7 @@ $(function(){
 		
 		</c:forEach>
 		
-	</div> 
+	</div>  --%>
 
 	
 	<!-- Start Script -->
