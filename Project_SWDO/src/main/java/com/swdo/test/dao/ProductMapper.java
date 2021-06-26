@@ -22,4 +22,7 @@ public interface ProductMapper {
 	public int productTotalRecordsCount_imageSearch(ArrayList<String> similarProduct);
 
 	public ArrayList<ProductVO> productSelectAll_imageSearch(ArrayList<String> similarProduct, RowBounds rb);
+	public ArrayList<ProductVO> productSelectAll_imageSearch(ArrayList<String> similarProduct);
+	
+	public ProductVO productSelectOne(String productId);
 }

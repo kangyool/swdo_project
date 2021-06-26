@@ -150,6 +150,29 @@ public class ProductViewController {
 		return "product/productListForm_imageSearch";
 	}
 	
+	
+	@RequestMapping(value = "/productDetail", method = RequestMethod.GET)
+	public String productDetail(Model model, String productId) throws IOException {
+		
+		ProductVO detail = service.productSelectOne(productId);
+		String path = "C:/Users/kangyool/Desktop/SWDO/SWDO ICT PROJECT/project_swdo_reference/";
+		
+		String[] fileName_raw = detail.getUri().split("/");
+		String fileName = fileName_raw[fileName_raw.length - 1];
+		
+		logger.info("productSelectOne : {}", detail);
+		
+		ArrayList<String> similarProduct = ProductSearchAPI.getSimilarProductsFile("snappy-guard-316800", "us-west1", "productSetId-001", "apparel-v2", path + fileName, "");
+		ArrayList<ProductVO> related = service.productSelectAll_imageSearch(similarProduct);
+		
+		logger.info("------------------------------------------------");
+		logger.info("related : {}", related);
+		
+		model.addAttribute("detail", detail);
+		model.addAttribute("related", related);
+		
+		return "product/productDetail";
+	}
 
 	
 }

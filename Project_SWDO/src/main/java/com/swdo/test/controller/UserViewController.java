@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.swdo.test.vo.UserVO;
 import com.swdo.test.service.UserService;
@@ -23,7 +24,7 @@ public class UserViewController {
 	private static final Logger logger = LoggerFactory.getLogger(UserViewController.class);
 	
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
-	public String moveToJoinForm() {
+	public String moveToJoinForm(@RequestParam(name="flag", defaultValue="non-home")String flag) {
 		return "user/joinForm";
 	}
 	
@@ -41,10 +42,10 @@ public class UserViewController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(UserVO user) {
+	public String delete(UserVO user, @RequestParam(name="flag", defaultValue="non-home")String flag) {
 		
 		service.userDelete(user);
-		service.userLogout();
+		service.userLogout(flag);
 		return "redirect:/";
 	}
 	
@@ -74,15 +75,16 @@ public class UserViewController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST )
-	public String login(UserVO user) {
+	public String login(UserVO user, @RequestParam(name="flag", defaultValue="non-home")String flag) {
 		String path = service.userLogin(user);
 		return path;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout() {
-		service.userLogout();
-		return "redirect:/";
+	public String logout(@RequestParam(name="flag", defaultValue="non-home")String flag) {
+		System.out.println(flag);
+		String path = service.userLogout(flag);
+		return path;
 	}
 	
 }

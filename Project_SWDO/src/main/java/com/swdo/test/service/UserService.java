@@ -28,7 +28,8 @@ public class UserService {
 			path = "redirect:/user/joinForm";
 		}else {
 			System.out.println("회원가입 성공");
-			path = "redirect:/";
+
+			path = "redirect:/product/productListForm";
 		}
 		
 		return path;
@@ -83,7 +84,9 @@ public class UserService {
 			if (result.getUser_pw().equals(user.getUser_pw())) {
 				System.out.println("로그인 성공");
 				session.setAttribute("loginVO", result);
-				path = "redirect:/";
+				
+				path = "redirect:/product/productListForm";
+				
 			} else {
 				System.out.println("로그인 실패");
 				path = "redirect:/user/loginForm";
@@ -93,8 +96,20 @@ public class UserService {
 		return path;
 	}
 	
-	public void userLogout() {
+	public String userLogout(String flag) {
 		session.removeAttribute("loginVO");
+		
+		String path;
+		
+		if (flag.equals("home")) {
+			path = "redirect:/";
+			System.out.println("홈으로 이동");
+		}
+		else{
+			path = "redirect:/product/productListForm";
+		}
+		
+		return path;
 	}
 	
 

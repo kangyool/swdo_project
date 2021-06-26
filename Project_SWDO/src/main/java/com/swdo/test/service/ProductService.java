@@ -119,4 +119,16 @@ public class ProductService {
 		
 		return result;
 	}
+	
+	public ArrayList<ProductVO> productSelectAll_imageSearch(ArrayList<String> similarProduct){ 
+		
+		ArrayList<ProductVO> result = dao.productSelectAll_imageSearch(similarProduct);
+		
+		return result;
+	}
+	
+	public ProductVO productSelectOne(String productId) {	
+		ProductVO result = dao.productSelectOne(productId);
+		return result;
+	}
 }

@@ -126,4 +126,35 @@ public class ProductDAO {
 		return result;
 		
 	}
+	
+	public ProductVO productSelectOne(String productId) {
+		ProductVO result = null;
+
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			result = mapper.productSelectOne(productId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	public ArrayList<ProductVO> productSelectAll_imageSearch(ArrayList<String> similarProduct){
+		
+		ArrayList<ProductVO> result = null;
+		
+		try {
+			
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+	
+			result = mapper.productSelectAll_imageSearch(similarProduct);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
 }

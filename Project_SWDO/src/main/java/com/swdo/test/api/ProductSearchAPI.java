@@ -146,7 +146,7 @@ public class ProductSearchAPI {
 		        int index = product.getProduct().getName().lastIndexOf("/");
 		        
 		        //제품 정보를 result에 저장
-		        if(product.getScore() >= 0.01)
+		        if(product.getScore() >= 0.01 && product.getScore() != 1)
 		        	result.add(product.getProduct().getName().substring(index+1));
 		      }
 		    }

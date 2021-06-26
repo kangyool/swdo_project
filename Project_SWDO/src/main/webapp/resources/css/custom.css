@@ -10,6 +10,10 @@ Custom css
 	flex-wrap: nowrap;
 }
 
+.cc-flex-wrap-wrap{
+	flex-wrap: wrap;
+}
+
 .cc-justify-content-flex-end{
 	justify-content: flex-end;
 }

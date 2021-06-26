@@ -112,59 +112,18 @@
 
 </select>
 
-<!-- <select id="userSelectAll" resultType="user">
-	select  
-		user_no 
-		,user_id
-		,user_pw
-		,user_name
-		,to_char(user_indate, 'YYYY-MM-DD') as user_indate
-	from
-		SWDO_user_tb
-</select>
-
-<delete id="userDelete" parameterType="user">
-	delete from
-		SWDO_user_tb
-	where
-		user_id = #{user_id}
-</delete>
-
-<select id="userSelectOne" parameterType="user" resultType="user">
+<select id="productSelectOne" parameterType="String" resultType="product">
 	select
-		user_no 
-		,user_id
-		,user_pw
-		,user_name
-		,to_char(user_indate, 'YYYY-MM-DD') as user_indate
+		productId
+		,productDisplayName
+		,referenceImageId
+		,gcsUri
+		,uri
 	from
-		SWDO_user_tb
+		SWDO_product_tb
 	where
-		user_id = #{user_id}
+		productId = #{productId}
 </select>
-
-<update id="userUpdate" parameterType="user">
-	update
-		SWDO_user_tb
-	set
-		user_pw = #{user_pw}
-		,user_name = #{user_name}
-	where
-		user_id = #{user_id}
-</update>
-
-<select id="userLogin" parameterType="user" resultType="user">
-	select
-		user_no 
-		,user_id
-		,user_pw
-		,user_name
-		,to_char(user_indate, 'YYYY-MM-DD') as user_indate
-	from
-		SWDO_user_tb
-	where
-		user_id = #{user_id}
-</select> -->
 
 
 </mapper>

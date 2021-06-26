@@ -42,66 +42,23 @@ function userImageUpload(){
 </script>	
 </head>
 <body>
-
-
-			<%-- <c:choose>
-				<c:when test="${empty sessionScope.loginVO }">			
-					<a href="/user/joinForm">회원 가입 폼 이동</a>														
-					<a href="/user/loginForm">로그인 폼 이동</a>								
-				</c:when>				
-				<c:otherwise>				
-					<a href="user/logout">로그아웃</a>					
-				</c:otherwise>		
-			</c:choose>	
-			
-			<c:choose>
-				<c:when test="${sessionScope.loginVO.user_id eq 'admin'}">
-					<a href="/product/listForm">제품 정보 보기</a>				
-					<a href="/product/enrollForm">제품 등록 폼 이동</a>
-					<a href="/user/listForm">회원 정보 보기</a>
-					</li>	
-				</c:when>
-			</c:choose> 	 --%>	
-	
-		
-	<!-- <div style="clear:right;   display: flex; justify-content: center">
-			<form action="/product/productListForm" method="get" id="searchForm" style="display:inline">
-				<input type="text" name="searchText">
-				<input type="hidden" name="currentPage" id="currentPage">
-				<input type="button" value="검색" onclick="searchProduct(1)">
-			</form>
-			
-			<form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="display:inline">
-				<input type = "file" name="upload" id="upload" onchange="userImageUpload()"> 
-			</form>
-	</div>  -->
 	
 	<nav class="navbar cc-justify-content-flex-end"> 
 	
 		<div class="cc-display-flex" style=""> </div>
        	<div class="cc-display-flex cc-justify-content-space-between" id="" style="margin: 15px 50px">                
 
-                    <!-- <a class="" href="#" style="font-size: 35px; margin:0 5px" >
-                        <i class="fa fa-fw fa-search text-dark"></i>
-                    </a>
-                    <a class="" href="#" style="font-size: 35px; margin:0 5px">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark"></i>
-                    </a>
-                    <a class="" href="#" style="font-size: 35px; margin:0 5px">
-                        <i class="fa fa-fw fa-user text-dark"></i>
-                    </a> -->
-                    
             <c:choose>
 				<c:when test="${empty sessionScope.loginVO }">			
-					<a href="/user/joinForm" style="font-size: 35px; margin:0 5px" title="회원 가입">
-						<i class="fa fa-fw fa-user-plus text-dark" title="회원 가입"></i>
-					</a>														
-					<a href="/user/loginForm" style="font-size: 35px; margin:0 5px" title="로그인">
+					<a href="/user/loginForm?" style="font-size: 35px; margin:0 5px" title="로그인">
 						<i class="fa fa-fw fa-sign-in-alt text-dark" title="로그인"></i>
 					</a>								
+					<a href="/user/joinForm?" style="font-size: 35px; margin:0 5px" title="회원 가입">
+						<i class="fa fa-fw fa-user-plus text-dark" title="회원 가입"></i>
+					</a>														
 				</c:when>				
 				<c:otherwise>				
-					<a href="user/logout" style="font-size: 35px; margin:0 5px" title="로그아웃">
+					<a href="user/logout?flag=home" style="font-size: 35px; margin:0 5px" title="로그아웃">
 						<i class="fa fa-fw fa-sign-out-alt text-dark" title="로그아웃"></i>
 					</a>
 				<c:if test="${sessionScope.loginVO.user_id ne 'admin'}">
@@ -150,14 +107,6 @@ function userImageUpload(){
 				</button>
 			</form>
 			
-            <!-- <form action="" method="" style="" class="display-flex">    
-                    이미지 검색 버튼. 숨겨서 저장 
-					<input type="file" class="display-none" id="file" name="file" onchange="userImageUpload()" style=""/>
-					<button type="button" class="bg-warning" id="btn-upload">
-                        <i class="fa fa-fw fa-camera-retro text-white"></i>					
-					</button>
-            </form> -->
-             
         </div>
     </div>
     
