@@ -125,5 +125,56 @@
 		productId = #{productId}
 </select>
 
+<insert id="likeInsert" parameterType="hashmap">
+	insert into
+		SWDO_likeProduct_tb(
+			user_id
+			,productId
+		)values(
+			#{user_id}
+			,#{productId}
+		)
+</insert>
+
+<update id="likeUpdate" parameterType="hashmap">
+	update 
+		SWDO_likeProduct_tb
+	set
+		<if test="like_check_org == 1">
+		like_check = '0'
+		</if>
+		<if test="like_check_org == 0">
+		like_check = '1'
+		</if>
+	where
+		user_id = #{user_id}
+		and
+		productId = #{productId}
+		
+</update> 
+
+
+<select id="likeSelect" parameterType="hashmap" resultType="int">
+	select
+		like_check
+	from
+		SWDO_likeProduct_tb
+	where
+		user_id = #{user_id}
+		and
+		productId = #{productId}
+</select>   
+
+<select id="likeSum" parameterType="String" resultType="int">
+	select
+		count(*)
+	from
+		SWDO_likeProduct_tb
+	where
+		user_id = #{user_id}
+		and
+		like_check = '1'
+</select>   
+
 
 </mapper>

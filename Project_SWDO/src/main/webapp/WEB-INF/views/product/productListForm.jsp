@@ -124,6 +124,88 @@ $(function(){
 			
 		}
 	});
+
+	$(".btn_like").on("click", function(){
+		
+		var productId = $(this).closest("div").prev().attr('id');
+
+		//alert(productId);
+
+		$.ajax({
+
+			url : "/product/likeProduct_click",
+			type : "post",
+			data : {
+				productId : productId
+			},
+			success : function(data){
+				console.log(data);
+				if(data.like_check_new == 1){
+					$("." + data.productId).attr('style', 'color:red');					
+				}else{
+					$("." + data.productId).attr('style', 'color:white');
+				}
+
+				$("#like_sum").html(data.like_sum); //오른쪽 상단 하트로 날아가는 에니메이션?
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	}); 
+
+	$(".card-img.rounded-0.img-fluid").on("mouseover", function(){
+		
+		var productId = $(this).attr('id');
+
+		//alert(productId);
+		
+		$.ajax({
+
+			url : "/product/likeProduct_mouseover",
+			type : "post",
+			data : {
+				productId : productId
+			},
+			success : function(data){
+				//console.log(data);
+
+				if(data.like_check_cur == 1){
+					$("." + data.productId).attr('style', 'color:red');
+				}else{
+					$("." + data.productId).attr('style', 'color:white');
+				}
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	}); 
+
+	$(document).ready(function(){
+
+		$.ajax({
+
+			url : "/product/likeSum",
+			type : "get",
+			success : function(data){
+				console.log(data);
+				$("#like_sum").html(data.like_sum); //에니메이션 효과?
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	});
+	
+	
+
 });
 
 </script>
@@ -193,11 +275,11 @@ $(function(){
 						<c:otherwise>
 						    <a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="장바구니">
 		                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-		                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+		                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                   			</a>
                   			<a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
 		                        <i class="fa fa-fw fa-heart text-dark mr-1"></i>
-		                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+		                        <span id="like_sum" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                   			</a>				
 							<a href="/user/logout" style="color: #212529;font-size: 35px; margin:0 5px" title="로그아웃">
 								<i class="fa fa-fw fa-sign-out-alt text-dark"></i>
@@ -240,7 +322,7 @@ $(function(){
                         <ul id="collapseThree" class="collapse list-unstyled pl-3">
                             <li><a class="text-decoration-none" href="/product/productListForm?searchText=가방">Bag</a></li>
                             <li><a class="text-decoration-none" href="/product/productListForm?searchText=신발">Shoes</a></li>
-                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리	">Accessory</a></li>
+                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리">Accessory</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -250,15 +332,17 @@ $(function(){
                <div class="row" id="productDisplay">
                
 	               <c:forEach var="productList" items="${productList }">
-	                    <div class="col-md-4"> <!-- 여기부터 1개 아이템 시작 -->
+	               
+	               <!-- 여기부터 1개 아이템 시작 -->
+	                    <div class="col-md-4"> 
 	                        <div class="card mb-4 product-wap rounded-0">
 	                            <div class="card rounded-0">
-	                                <img class="card-img rounded-0 img-fluid" name="${productList.productDisplayName }" id="${productList.productId }" src="${productList.uri }">  <!-- 이미지 부분 -->
+	                                <img class="card-img rounded-0 img-fluid" name="${productList.productDisplayName }" id="${productList.productId }" src="${productList.uri }" >  <!-- 이미지 부분 -->
 	                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 	                                    <ul class="list-unstyled">
-	                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+	                                        <li><a class="btn btn-success text-white btn_like"><i class="fa fa-fw fa-heart ${productList.productId }" style=""></i></a></li>
 	                                        <li><a class="btn btn-success text-white mt-2" href="/product/productDetail?productId=${productList.productId }"><i class="far fa-eye"></i></a></li>
-	                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+	                                        <li><a class="btn btn-success text-white mt-2"><i class="fas fa-cart-plus"></i></a></li>
 	                                    </ul>
 	                                </div>
 	                            </div>
@@ -286,7 +370,8 @@ $(function(){
 	                                <p class="text-center mb-0">$250.00</p>
 	                            </div>
 	                        </div>
-	                    </div> <!-- 1개 아이템 끝 -->
+	                    </div>
+	                <!-- 1개 아이템 끝 -->    
 	                </c:forEach>    
 	                
                 </div>

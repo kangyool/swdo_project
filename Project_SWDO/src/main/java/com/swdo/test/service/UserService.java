@@ -55,20 +55,18 @@ public class UserService {
 		return result;
 	}
 	
-	public String userUpdate(UserVO user) {
+	public int userUpdate(UserVO user) {
 		
 		int cnt = dao.userUpdate(user);
-		String path;
 
 		if(cnt == 0) {
 			System.out.println("회원정보 갱신 실패");
-			path = "redirect:/user/updateForm?user_id=" + user.getUser_id();
+
 		}else {
 			System.out.println("회원정보 갱신 성공");
-			path = "redirect:/user/detail?user_id=" + user.getUser_id();
 		}
 		
-		return path;
+		return cnt;
 	}
 	
 	public String userLogin(UserVO user) {

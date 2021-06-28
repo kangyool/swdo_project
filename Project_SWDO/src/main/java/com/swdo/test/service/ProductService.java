@@ -1,6 +1,7 @@
 package com.swdo.test.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import com.swdo.test.dao.ProductDAO;
 import com.swdo.test.util.FileService;
 import com.swdo.test.vo.ProductVO;
 import com.swdo.test.vo.UserImageVO;
+import com.swdo.test.vo.UserVO;
 
 @Service
 public class ProductService {
@@ -130,5 +132,57 @@ public class ProductService {
 	public ProductVO productSelectOne(String productId) {	
 		ProductVO result = dao.productSelectOne(productId);
 		return result;
+	}
+	
+	public void likeInsert(HashMap<String, Object> map) {
+		
+		UserVO user = (UserVO) session.getAttribute("loginVO");
+		map.put("user_id", user.getUser_id());
+		
+		int cnt = dao.likeInsert(map);
+		
+		if (cnt == 1) {
+			logger.info("좋아요 데이터 등록 성공 : {}", map);
+		} else {
+			logger.info("좋아요 데이터 등록 실패 : {}", map);
+		}
+	
+	}
+	
+	public int likeUpdate(HashMap<String, Object> map) {
+		
+		UserVO user = (UserVO) session.getAttribute("loginVO");
+		map.put("user_id", user.getUser_id());
+		
+		int like_check_org = dao.likeUpdate(map);
+		int like_check_new = 0;
+		
+		if (like_check_org == 1) {
+			like_check_new = 0;
+		} else {
+			like_check_new = 1;	
+		}
+		
+		return like_check_new;
+	
+	}
+	
+	public int likeSelect(HashMap<String, Object> map) {
+		UserVO user = (UserVO) session.getAttribute("loginVO");
+		map.put("user_id", user.getUser_id());
+		
+		int like_check_cur = dao.likeSelect(map);
+		
+		return like_check_cur;
+	}
+	
+	public int likeSum() {
+		
+		UserVO user = (UserVO) session.getAttribute("loginVO");
+		
+		int like_sum = dao.likeSum(user.getUser_id());
+		
+		return like_sum;
+		
 	}
 }

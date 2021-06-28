@@ -100,6 +100,53 @@ public class ProductRestController {
 		
 	}
 	
+	@RequestMapping(value = "/likeProduct_click", method = RequestMethod.POST)
+	public HashMap<String, Object> likeProduct_click(String productId){
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("productId", productId);
+		
+		service.likeInsert(map);
+		
+		logger.info("productId : {}", productId);
+		
+		int like_check_new = service.likeUpdate(map);
+		map.put("like_check_new", like_check_new);
+		
+		int like_sum = service.likeSum();
+		map.put("like_sum", like_sum);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/likeProduct_mouseover", method = RequestMethod.POST)
+	public HashMap<String, Object> likeProduct_mouseover(String productId){
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("productId", productId);
+		
+		logger.info("productId : {}", productId);
+		
+		int like_check_cur = service.likeSelect(map);
+		
+		map.put("like_check_cur", like_check_cur);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/likeSum", method = RequestMethod.GET)
+	public HashMap<String, Object> likeSum(){
+		
+		HashMap<String, Object> map = new HashMap<>();
+		int like_sum = service.likeSum();
+		
+		map.put("like_sum", like_sum);
+		
+		return map;
+	}
+	
+	
+	
 //  getSimilarProductsFile와 productSelectAll_imageSearch를 분리하고 싶은데, RestController에서의 컨트롤러 간 데이터 전달이 현재 불가능하다. 선생님께 자문 요망
 	
 //	@RequestMapping(value = "/productListForm_imageSearch_rest", method = RequestMethod.GET)

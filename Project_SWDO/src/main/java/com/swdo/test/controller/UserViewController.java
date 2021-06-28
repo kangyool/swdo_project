@@ -50,23 +50,26 @@ public class UserViewController {
 	}
 	
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String moveToDetailForm(UserVO user, Model model) {
+	public String moveToDetailForm(UserVO user, Model model, @RequestParam(name="cnt_str", defaultValue="2")String cnt_str) {
 		UserVO result = service.userSelectOne(user);
 		model.addAttribute("detail", result);
+		model.addAttribute("cnt_str", cnt_str);
 		return "user/detailForm";
 	}
 	
-	@RequestMapping(value = "/updateForm", method = RequestMethod.GET)
-	public String moveToUpdateForm(UserVO user, Model model) {
-		UserVO result = service.userSelectOne(user);
-		model.addAttribute("detail", result);
-		return "user/updateForm";
-	}
+	/*
+	 * @RequestMapping(value = "/updateForm", method = RequestMethod.GET) public
+	 * String moveToUpdateForm(UserVO user, Model model) { UserVO result =
+	 * service.userSelectOne(user); model.addAttribute("detail", result); return
+	 * "user/updateForm"; }
+	 */
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(UserVO user) {
-		String path = service.userUpdate(user);
-		return path;
+		int cnt = service.userUpdate(user);
+		String cnt_str = Integer.toString(cnt);
+		
+		return "redirect:/user/detail?user_id=" + user.getUser_id() + "&cnt_str=" + cnt_str;
 	}
 	
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
@@ -76,6 +79,10 @@ public class UserViewController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST )
 	public String login(UserVO user, @RequestParam(name="flag", defaultValue="non-home")String flag) {
+		
+		logger.info("--------------------");
+		logger.info("user : {}", user);
+		
 		String path = service.userLogin(user);
 		return path;
 	}

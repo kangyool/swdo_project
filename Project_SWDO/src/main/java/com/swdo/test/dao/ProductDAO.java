@@ -1,6 +1,7 @@
 package com.swdo.test.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -156,5 +157,63 @@ public class ProductDAO {
 		
 		return result;
 		
+	}
+	
+	public int likeInsert(HashMap<String, Object> map) {
+		
+		int cnt = 0;
+		
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			cnt = mapper.likeInsert(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	
+	public int likeUpdate(HashMap<String, Object> map) {
+		
+		int like_check_org = 0;
+		
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			like_check_org = mapper.likeSelect(map);
+			map.put("like_check_org", like_check_org);
+			mapper.likeUpdate(map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return like_check_org;
+	}
+	
+	public int likeSelect(HashMap<String, Object> map) {
+		
+		int like_check_cur = 0;
+		
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			like_check_cur = mapper.likeSelect(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return like_check_cur;
+	}
+	
+	public int likeSum(String user_id) {
+		int like_sum = 0;
+		
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			like_sum = mapper.likeSum(user_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return like_sum;
 	}
 }
