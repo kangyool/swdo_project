@@ -26,10 +26,6 @@
 <script type="text/javascript">
 var flag=true;
 
-function moveToHome(){
-	location.href = "/";
-}
-
 function searchProduct(page){
 	document.getElementById("currentPage").value = page;
 	var searchForm = document.getElementById("searchForm");
@@ -49,6 +45,94 @@ function userImageUpload(){
 
 $(function(){
 
+	//Code to click "imageUpload button"
+	$('#btn-upload').on("click", function(){
+		$("#upload").click();
+	});
+
+	//Start 'like' function 
+	$(document).on("click", ".btn_like", function(){
+		
+		var productId = $(this).closest("div").prev().attr('id');
+
+		//	alert(productId);
+
+		$.ajax({
+
+			url : "/product/likeProduct_click",
+			type : "post",
+			data : {
+				productId : productId
+			},
+			success : function(data){
+				console.log(data);
+				if(data.like_check_new == 1){
+					$("." + data.productId).attr('style', 'color:red');					
+				}else{
+					$("." + data.productId).attr('style', 'color:white');
+				}
+
+				$("#like_sum").html(data.like_sum); //오른쪽 상단 하트로 날아가는 에니메이션?
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	}); 
+
+	$(document).on("mouseover", ".card-img.rounded-0.img-fluid", function(){
+		
+		var productId = $(this).attr('id');
+
+		//alert(productId);
+		
+		$.ajax({
+
+			url : "/product/likeProduct_mouseover",
+			type : "post",
+			data : {
+				productId : productId
+			},
+			success : function(data){
+				//console.log(data);
+
+				if(data.like_check_cur == 1){
+					$("." + data.productId).attr('style', 'color:red');
+				}else{
+					$("." + data.productId).attr('style', 'color:white');
+				}
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	}); 
+
+	$(document).ready(function(){
+
+		$.ajax({
+
+			url : "/product/likeSum",
+			type : "get",
+			success : function(data){
+				console.log(data);
+				$("#like_sum").html(data.like_sum); 
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	});
+	//End 'like' function
+	
+		
+	//Start infinite scroll
 	function productSelectAll(data){
 
 		console.log(data);
@@ -60,7 +144,7 @@ $(function(){
 			content += '<div class="card rounded-0">'
 			content += '<img class="card-img rounded-0 img-fluid" name="' + item.productDisplayName + '" id="' + item.productId + '" alt="" src="' + item.uri + '">';
 			content += '<div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">'
-			content += '<ul class="list-unstyled"> <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li> <li><a class="btn btn-success text-white mt-2" href="/product/productDetail?productId=' + item.productId + '"><i class="far fa-eye"></i></a></li> <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li> </ul>'
+			content += '<ul class="list-unstyled"> <li><a class="btn btn-success text-white btn_like"><i class="fa fa-fw fa-heart ' + item.productId + '" style="" ></i></a></li> <li><a class="btn btn-success text-white mt-2" href="/product/productDetail?productId=' + item.productId + '"><i class="far fa-eye"></i></a></li> <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li> </ul>'
 			content += '</div>'
 			content += '</div>'
 			content += '<div class="card-body">'
@@ -124,87 +208,7 @@ $(function(){
 			
 		}
 	});
-
-	$(".btn_like").on("click", function(){
-		
-		var productId = $(this).closest("div").prev().attr('id');
-
-		//alert(productId);
-
-		$.ajax({
-
-			url : "/product/likeProduct_click",
-			type : "post",
-			data : {
-				productId : productId
-			},
-			success : function(data){
-				console.log(data);
-				if(data.like_check_new == 1){
-					$("." + data.productId).attr('style', 'color:red');					
-				}else{
-					$("." + data.productId).attr('style', 'color:white');
-				}
-
-				$("#like_sum").html(data.like_sum); //오른쪽 상단 하트로 날아가는 에니메이션?
-			},
-			error : function(e){
-				console.log(e);
-			}
-			
-		})
-		
-	}); 
-
-	$(".card-img.rounded-0.img-fluid").on("mouseover", function(){
-		
-		var productId = $(this).attr('id');
-
-		//alert(productId);
-		
-		$.ajax({
-
-			url : "/product/likeProduct_mouseover",
-			type : "post",
-			data : {
-				productId : productId
-			},
-			success : function(data){
-				//console.log(data);
-
-				if(data.like_check_cur == 1){
-					$("." + data.productId).attr('style', 'color:red');
-				}else{
-					$("." + data.productId).attr('style', 'color:white');
-				}
-			},
-			error : function(e){
-				console.log(e);
-			}
-			
-		})
-		
-	}); 
-
-	$(document).ready(function(){
-
-		$.ajax({
-
-			url : "/product/likeSum",
-			type : "get",
-			success : function(data){
-				console.log(data);
-				$("#like_sum").html(data.like_sum); //에니메이션 효과?
-			},
-			error : function(e){
-				console.log(e);
-			}
-			
-		})
-		
-	});
-	
-	
+	//End infinite scroll
 
 });
 
@@ -273,22 +277,33 @@ $(function(){
 							</a>														
 						</c:when>				
 						<c:otherwise>
-						    <a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="장바구니">
-		                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-		                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                  			</a>
-                  			<a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
-		                        <i class="fa fa-fw fa-heart text-dark mr-1"></i>
-		                        <span id="like_sum" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                  			</a>				
-							<a href="/user/logout" style="color: #212529;font-size: 35px; margin:0 5px" title="로그아웃">
-								<i class="fa fa-fw fa-sign-out-alt text-dark"></i>
-							</a>
 							<c:if test="${sessionScope.loginVO.user_id ne 'admin'}">
-								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px" title="회원 정보">					
+							    <a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="장바구니">
+			                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+			                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+	                  			</a>
+	                  			<a class="nav-icon position-relative text-decoration-none" href="/product/likeProduct" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
+			                        <i class="fa fa-fw fa-heart text-dark mr-1"></i>
+			                        <span id="like_sum" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+	                  			</a>				
+								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px; color: #212529" title="회원 정보">					
 									<i class="fa fa-fw fa-user-edit text-dark"></i>
 								</a>
+							</c:if>
+							<c:if test="${sessionScope.loginVO.user_id eq 'admin'}">	
+								<a href="/product/listForm" style="font-size: 35px; margin:0 5px" title="제품 목록">
+									<i class="fa fa-fw fa-folder-open text-dark" title="제품 목록"></i>
+								</a>				
+								<a href="/product/enrollForm" style="font-size: 35px; margin:0 5px" title="제품 등록">
+									<i class="fa fa-fw fa-folder-plus text-dark" title="제품 등록"></i>
+								</a>
+								<a href="/user/listForm" style="font-size: 35px; margin:0 5px" title="전체 회원 관리">
+									<i class="fa fa-fw fa-users-cog text-dark" title="전체 회원 관리"></i>
+								</a>	
 							</c:if>	
+								<a href="/user/logout" style="color: #212529;font-size: 35px; margin:0 5px" title="로그아웃">
+									<i class="fa fa-fw fa-sign-out-alt text-dark"></i>
+								</a>
 						</c:otherwise>						
 					</c:choose>	
                 </div>
@@ -444,20 +459,20 @@ $(function(){
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Men</a></li>
-                        <li><a class="text-decoration-none" href="#">Women</a></li>
-                        <li><a class="text-decoration-none" href="#">Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Bag</a></li>
-                        <li><a class="text-decoration-none" href="#">Accessory</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=남성">Men</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=여성">Women</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=신발">Shoes</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=가방">Bag</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리">Accessory</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Home</a></li>
-                        <li><a class="text-decoration-none" href="#">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                        <li><a class="text-decoration-none" href="/company/index.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="/company/about.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="/company/contact.html">Contact</a></li>
                     </ul>
                 </div>
 

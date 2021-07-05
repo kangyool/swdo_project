@@ -145,42 +145,25 @@ public class ProductRestController {
 		return map;
 	}
 	
+	@RequestMapping(value= "/likeProduct_rest", method = RequestMethod.GET)
+	public HashMap<String, Object> likeProductListForm() {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		ArrayList<String> result1 = service.likeProductSelect();
+		
+		logger.info("result1 : {}", result1 );
+		
+		ArrayList<ProductVO> result2 = service.productSelectAll_imageSearch(result1);
+		
+		map.put("productList", result2);
+		
+		logger.info("result2 : {}", result2 );
+		
+		return map;
+	}
 	
-	
-//  getSimilarProductsFile와 productSelectAll_imageSearch를 분리하고 싶은데, RestController에서의 컨트롤러 간 데이터 전달이 현재 불가능하다. 선생님께 자문 요망
-	
-//	@RequestMapping(value = "/productListForm_imageSearch_rest", method = RequestMethod.GET)
-//	public HashMap<String, Object> productListForm_imageSearch_rest(HttpServletRequest request, 
-//			@RequestParam(name = "currentPage", defaultValue = "1") int currentPage) {
-//		
-//		HashMap<String, Object> map = new HashMap<>();
-//		ArrayList<String> similarProduct = new ArrayList<String>();
-//		
-//		//ImageSearch로부터 전달된 데이터를 받는다.
-//        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-//        
-//        if(flashMap!=null) {
-//            
-//           similarProduct =(ArrayList<String>)flashMap.get("similarProduct");
-//        }
-//		
-//		logger.info("ArrayList<String> similarProduct : {}", similarProduct);
-//		
-//		int totalRecordsCount = service.productTotalRecordsCount_imageSearch(similarProduct);
-//		
-//		PageNavigator navi = new PageNavigator(currentPage, totalRecordsCount, COUNT_PER_PAGE);
-//		
-//		navi.setCurrentPage(navi.getCurrentPage() + 1); 
-//		
-//		ArrayList<ProductVO> result = service.productSelectAll_imageSearch(similarProduct, navi.getStartRecord(), COUNT_PER_PAGE);
-//		
-//		System.out.println(result);
-//		
-//		map.put("productList", result);
-//		map.put("navi", navi);
-//		
-//		return map;
-//	}
+
 	
 
 }

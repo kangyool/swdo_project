@@ -88,7 +88,7 @@ function userImageUpload(){
 	
 	<div class="cc-display-flex cc-disposition-center cc-flex-direction-column" >
 		<div class="cc-display-flex">
-			<img alt="" src="./../../resources/img/apple-icon.png" height="100px" width="135px">
+			<img alt="" src="./../../resources/img/apple-icon.png" height="100px" width="120px">
 		</div>
 		
 	    <div class="cc-display-flex cc-flex-wrap-nowrap">

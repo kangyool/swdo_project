@@ -1,5 +1,6 @@
 package com.swdo.test.service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -184,5 +185,14 @@ public class ProductService {
 		
 		return like_sum;
 		
+	}
+	
+	public ArrayList<String> likeProductSelect(){
+		
+		UserVO user = (UserVO) session.getAttribute("loginVO");
+		
+		ArrayList<String> result = dao.likeProductSelect(user.getUser_id());
+		
+		return result;
 	}
 }

@@ -60,9 +60,6 @@
 		upper(productId) like '%'||upper(#{searchText})||'%' 
 	
 	</if>
-	
-	order by 
-		productDisplayName desc
 </select>
 
 <insert id="imageInsert" parameterType="image">
@@ -176,5 +173,17 @@
 		like_check = '1'
 </select>   
 
+<select id="likeProductSelect" parameterType="String" resultType="String">
+	select
+		productId
+	from
+		SWDO_likeProduct_tb
+	where
+		user_id = #{user_id}
+		and
+		like_check = '1'
+	order by
+		like_indate desc
+</select>
 
 </mapper>

@@ -6,7 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Zay Shop - Product Detail Page</title>
+<meta charset="UTF-8">
+    <title>ProductLike_list</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,11 +22,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="./../../../resources/css/fontawesome.min.css">
 
-
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
+var flag=true;
+
+function moveToHome(){
+	location.href = "/";
+}
+
 function searchProduct(page){
-	document.getElementById("currentPage").value = page;
+	document.getElementById("age").value = page;
 	var searchForm = document.getElementById("searchForm");
 
 	searchForm.submit();
@@ -42,11 +48,6 @@ function userImageUpload(){
 } 
 
 $(function(){
-
-	//Code to click "imageUpload button"
-	$('#btn-upload').on("click", function(){
-		$("#upload").click();
-	});
 
 	//Start 'like' function 
 	$(document).on("click", ".btn_like", function(){
@@ -71,6 +72,7 @@ $(function(){
 				}
 
 				$("#like_sum").html(data.like_sum); //오른쪽 상단 하트로 날아가는 에니메이션?
+				likeProductSelect();
 			},
 			error : function(e){
 				console.log(e);
@@ -84,7 +86,7 @@ $(function(){
 		
 		var productId = $(this).attr('id');
 
-		//alert(productId);
+		/* alert(productId); */
 		
 		$.ajax({
 
@@ -101,6 +103,7 @@ $(function(){
 				}else{
 					$("." + data.productId).attr('style', 'color:white');
 				}
+
 			},
 			error : function(e){
 				console.log(e);
@@ -118,7 +121,7 @@ $(function(){
 			type : "get",
 			success : function(data){
 				console.log(data);
-				$("#like_sum").html(data.like_sum); 
+				$("#like_sum").html(data.like_sum); //에니메이션 효과?
 			},
 			error : function(e){
 				console.log(e);
@@ -128,13 +131,108 @@ $(function(){
 		
 	});
 	//End 'like' function
+	
+	function likeProductSelect(){
 
-});	
+		$.ajax({
+
+			url : "/product/likeProduct_rest",
+			type : "get",
+			success : function(data){
+				console.log(data);
+				productSelectAll(data);
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
+	}
+	
+		
+ 	//Start infinite scroll
+	function productSelectAll(data){
+
+		console.log(data);
+		var content = '';
+
+		$.each(data.productList, function(index, item){
+			content += '<div class="col-md-4">';
+			content += '<div class="card mb-4 product-wap rounded-0">'
+			content += '<div class="card rounded-0">'
+			content += '<img class="card-img rounded-0 img-fluid" name="' + item.productDisplayName + '" id="' + item.productId + '" alt="" src="' + item.uri + '">';
+			content += '<div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">'
+			content += '<ul class="list-unstyled"> <li><a class="btn btn-success text-white btn_like"><i class="fa fa-fw fa-heart ' + item.productId + '" style="" ></i></a></li> <li><a class="btn btn-success text-white mt-2" href="/product/productDetail?productId=' + item.productId + '"><i class="far fa-eye"></i></a></li> <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li> </ul>'
+			content += '</div>'
+			content += '</div>'
+			content += '<div class="card-body">'
+			content += '<a href="/product/productDetail?productId=' + item.productId + '" class="h3 text-decoration-none">' + item.productDisplayName + '</a>'
+			content += '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0"> <li>M/L/X/XL</li> <li class="pt-2"> <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span> </li> </ul>'
+			content += '<ul class="list-unstyled d-flex justify-content-center mb-1"><li><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-muted fa fa-star"></i><i class="text-muted fa fa-star"></i></li></ul>'
+			content += '<p class="text-center mb-0">$250.00</p>'
+			content += '</div>'
+			content += '</div>'
+			content += '</div>'			
+					 			
+		});
+
+		$("#productDisplay").html(content);
+		//$("#cp").val(data.navi.age);
+
+	}
+
+/* 
+	$(window).scroll(function(){
+		
+		var scrollHeight = $(window).scrollTop() + $(window).height();
+		var documentHeight = $(document).height();
+
+		var age = $("#cp").val(); 
+		var searchText = $("#st").val(); 
+		var totalPageCount = $("#tpc").val(); 
+
+		console.log("--------------------------------------------")
+		console.log("scrollHeight : " + scrollHeight);
+		console.log("documentHeight : " + documentHeight);
+		console.log("age! : " + age);
+		console.log("totalPageCount : " + totalPageCount);
+		
+		if(scrollHeight >= (documentHeight*0.001) && age <= totalPageCount){ 
+			console.log("age : " + age);
+
+			if (flag) {
+				flag = false;
+
+				$.ajax({
+
+					url : "/product/productListForm_rest",
+					type : "get",
+					data : {
+						age : age,
+						searchText : searchText
+					},
+					dataType : "json",
+					success : function(data){
+						console.log(data);
+						productSelectAll(data);
+						flag = true;
+					},
+					error : function(e){
+						console.log(e);
+					}
+				})
+			}
+			
+			
+		}
+	}); */
+	//End infinite scroll */
+
+});
+
 </script>
 </head>
-
 <body>
-    <!-- Start Top Nav -->
+   <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-lg-block cc-flex-wrap-nowrap" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
@@ -201,11 +299,11 @@ $(function(){
 			                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
 			                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 	                  			</a>
-	                  			<a class="nav-icon position-relative text-decoration-none" href="/product/likeProduct" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
+	                  			<a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
 			                        <i class="fa fa-fw fa-heart text-dark mr-1"></i>
 			                        <span id="like_sum" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 	                  			</a>				
-								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px; color: #212529;" title="회원 정보">					
+								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px; color: #212529" title="회원 정보">					
 									<i class="fa fa-fw fa-user-edit text-dark"></i>
 								</a>
 							</c:if>
@@ -230,7 +328,101 @@ $(function(){
     </nav>
     <!-- Close Header -->
     
-        <!-- Modal -->
+        <!-- Start Content Page -->
+    <div class="container-fluid bg-light py-5">
+        <div class="col-md-6 m-auto text-center">
+            <h1 class="h1">What You Like</h1>
+        </div>
+    </div>
+    
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row" >
+
+<!--             <div class="col-lg-3">
+                <h1 class="h2 pb-4">Categories</h1>
+                <ul class="list-unstyled templatemo-accordion">
+                    <li class="pb-3">
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                            Gender
+                            <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                        </a>
+                        <ul class="collapse show list-unstyled pl-3">
+                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=남성">Men</a></li>                            
+                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=여성">Women</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="pb-3">
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                            Product
+                            <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                        </a>
+                        <ul id="collapseThree" class="collapse list-unstyled pl-3">
+                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=가방">Bag</a></li>
+                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=신발">Shoes</a></li>
+                            <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리">Accessory</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div> -->
+
+            <div class="col-lg-9">
+               <div class="row" id="productDisplay">
+               
+	               <c:forEach var="productList" items="${productList }">
+	               
+	               <!-- 여기부터 1개 아이템 시작 -->
+	                    <div class="col-md-4"> 
+	                        <div class="card mb-4 product-wap rounded-0">
+	                            <div class="card rounded-0">
+	                                <img class="card-img rounded-0 img-fluid" name="${productList.productDisplayName }" id="${productList.productId }" src="${productList.uri }" >  <!-- 이미지 부분 -->
+	                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+	                                    <ul class="list-unstyled">
+	                                        <li><a class="btn btn-success text-white btn_like"><i class="fa fa-fw fa-heart ${productList.productId }" style=""></i></a></li>
+	                                        <li><a class="btn btn-success text-white mt-2" href="/product/productDetail?productId=${productList.productId }"><i class="far fa-eye"></i></a></li>
+	                                        <li><a class="btn btn-success text-white mt-2"><i class="fas fa-cart-plus"></i></a></li>
+	                                    </ul>
+	                                </div>
+	                            </div>
+	                            <div class="card-body">
+	                                <a href="/product/productDetail?productId=${productList.productId }" class="h3 text-decoration-none">${productList.productDisplayName }</a> <!-- 이름 부분 -->
+	                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+	                                    <li>M/L/X/XL</li>
+	                                    <li class="pt-2">
+	                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+	                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+	                                    </li>
+	                                </ul>
+	                                <ul class="list-unstyled d-flex justify-content-center mb-1">
+	                                    <li>
+	                                        <i class="text-warning fa fa-star"></i>
+	                                        <i class="text-warning fa fa-star"></i>
+	                                        <i class="text-warning fa fa-star"></i>
+	                                        <i class="text-muted fa fa-star"></i>
+	                                        <i class="text-muted fa fa-star"></i>
+	                                    </li>
+	                                </ul>
+	                                <p class="text-center mb-0">$250.00</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                <!-- 1개 아이템 끝 -->    
+	                </c:forEach>    
+	                
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- End Content -->
+    
+    
+
+    <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg cc-display-flex cc-flex-direction-column" role="document">
 	            
@@ -244,7 +436,7 @@ $(function(){
                 		
                     <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: auto">
 						<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
-						<input type="hidden" name="currentPage" id="currentPage">
+						<input type="hidden" name="age" id="age">
 						<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
 							<i class="fa fa-fw fa-search" style="color: #202124"></i>
 						</button>
@@ -261,144 +453,10 @@ $(function(){
         </div>
     </div>
 
-
-
-    <!-- Open Content -->
-    <section class="bg-light">
-        <div class="container pb-5">
-            <div class="row">
-                <div class="col-lg-5 mt-5">
-                    <div class="card mb-3">
-                        <img class="card-img img-fluid" src="${detail.uri }" alt="Card image cap" id="product-detail">
-                    </div>
-     
-                </div>
-                <!-- col end -->
-                <div class="col-lg-7 mt-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="h2">${detail.productDisplayName }</h1>
-                            <p class="h3 py-2">$25.00</p>
-                            <p class="py-2">
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-warning"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
-                            </p>                          
-
-                            <h6>Description:</h6>
-                            <p>내용채우기 내용채우기 내용채우기 내용채우기</p>
-
-                            <h6>Specification:</h6>
-                            <ul class="list-unstyled pb-3">
-                                <li>내용채우기 내용채우기 내용채우기</li>
-                            </ul>
-
-                            <form action="" method="GET">
-                                <input type="hidden" name="product-title" value="Activewear">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <ul class="list-inline pb-3">
-                                            <li class="list-inline-item">Size :
-                                                <input type="hidden" name="product-size" id="product-size" value="S">
-                                            </li>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size">S</span></li>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size">M</span></li>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size">L</span></li>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size">XL</span></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-auto">
-                                        <ul class="list-inline pb-3">
-                                            <li class="list-inline-item text-right">
-                                                Quantity
-                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                                            </li>
-                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row pb-3">
-                                    <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
-                                    </div>
-                                    <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Close Content -->
-
-    <!-- Start Article -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row text-left p-2 pb-3">
-                <h4>Related Products</h4>
-            </div>
-
-            <!--Start Carousel Wrapper-->
-            <div id="carousel-related-product" class="cc-display-flex cc-flex-direction-row cc-flex-wrap-wrap">
-				
-			<c:forEach var="related" items="${related }">
-                    <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0" style="width:200px">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" name="${related.productDisplayName }" id="${related.productId }" src="${related.uri }">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                   <li><a class="btn btn-success text-white btn_like"><i class="fa fa-fw fa-heart ${related.productId }" style=""></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="/product/productDetail?productId=${related.productId }"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="/product/productDetail?productId=${related.productId }" class="h3 text-decoration-none">${related.productDisplayName }</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <p class="text-center mb-0">$250.00</p>
-                        </div>
-                    </div>
-               		</div>
-                 
-                
-                
-	            </c:forEach>   
-                
-            </div>
-        </div>
-    </section>
-    <!-- End Article -->
-
-
+	<input type="hidden" value="${searchText }" id="st">
+	<input type="hidden" value="${navi.age }" id="cp">	
+	<input type="hidden" value="${navi.totalPageCount }" id="tpc">
+	
 	  <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
@@ -425,20 +483,20 @@ $(function(){
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=남성">Men</a></li>
-                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=여성">Women</a></li>
-                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=신발">Shoes</a></li>
-                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=가방">Bag</a></li>
-                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리">Accessory</a></li>
+                        <li><a class="text-decoration-none" href="#">Men</a></li>
+                        <li><a class="text-decoration-none" href="#">Women</a></li>
+                        <li><a class="text-decoration-none" href="#">Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Bag</a></li>
+                        <li><a class="text-decoration-none" href="#">Accessory</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="/company/index.html">Home</a></li>
-                        <li><a class="text-decoration-none" href="/company/about.html">About Us</a></li>
-                        <li><a class="text-decoration-none" href="/company/contact.html">Contact</a></li>
+                        <li><a class="text-decoration-none" href="#">Home</a></li>
+                        <li><a class="text-decoration-none" href="#">About Us</a></li>
+                        <li><a class="text-decoration-none" href="#">Contact</a></li>
                     </ul>
                 </div>
 
@@ -489,47 +547,12 @@ $(function(){
 
     </footer>
     <!-- End Footer -->
-
-    <!-- Start Script -->
+	
+	<!-- Start Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="./../../../resources/js/templatemo.js"></script>
     <script src="./../../../resources/js/custom.js"></script>
     <!-- End Script -->
-
-<!--     Start Slider Script
-    <script src="./../../resources/js/slick.min.js">
-        $('#carousel-related-product').slick({
-            infinite: true,
-            arrows: false,
-            slidesToShow: 4,
-            slidesToScroll: 3,
-            dots: true,
-            responsive: [{
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 3
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 3
-                    }
-                }
-            ]
-        });
-    </script>
-    End Slider Script
-     -->
-
+	
 </body>
 </html>

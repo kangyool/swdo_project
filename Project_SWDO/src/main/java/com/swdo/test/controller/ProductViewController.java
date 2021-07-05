@@ -174,5 +174,20 @@ public class ProductViewController {
 		return "product/productDetail";
 	}
 
+	@RequestMapping(value= "/likeProduct", method = RequestMethod.GET)
+	public String likeProductListForm(Model model) {
+		
+		ArrayList<String> result1 = service.likeProductSelect();
+		
+		logger.info("result1 : {}", result1 );
+		
+		ArrayList<ProductVO> result2 = service.productSelectAll_imageSearch(result1);
+		
+		model.addAttribute("productList", result2);
+		
+		logger.info("result2 : {}", result2 );
+		
+		return "product/likeProductListForm";
+	}
 	
 }

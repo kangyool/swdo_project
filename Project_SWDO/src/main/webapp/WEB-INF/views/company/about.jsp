@@ -1,5 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
 <!DOCTYPE html>
 <html>
 
@@ -21,13 +23,58 @@
     <link rel="stylesheet" href="./../../../resources/css/fontawesome.min.css">
 
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
-<script type="text/javascript"></script>
+<script type="text/javascript">
+function searchProduct(page){
+	document.getElementById("currentPage").value = page;
+	var searchForm = document.getElementById("searchForm");
+
+	searchForm.submit();
+	console.log(page);
+}
+
+function userImageUpload(){
+
+	var userImageUpload = document.getElementById("userImageUpload");
+
+	userImageUpload.submit();
+
+	document.getElementById("upload").value = "";
+} 
+
+$(function(){
+
+	//Code to click "imageUpload button"
+	$('#btn-upload').on("click", function(){
+		$("#upload").click();
+	});
+
+	$(document).ready(function(){
+
+		$.ajax({
+
+			url : "/product/likeSum",
+			type : "get",
+			success : function(data){
+				console.log(data);
+				$("#like_sum").html(data.like_sum); 
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+		})
+		
+	});
+
+});
+
+</script>
 
 </head>
 
 <body>
     <!-- Start Top Nav -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-lg-block cc-flex-wrap-nowrap" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
@@ -49,62 +96,80 @@
 
 
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
+    <nav class="navbar navbar-expand-lg navbar-light shadow cc-flex-wrap-nowrap">
         <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-                Zay
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+				<div class="cc-display-flex " style="flex-grow: 1">
+		            <a class="navbar-brand text-success logo h1 align-self-center" href="/">
+		                Zay
+		            </a> 
+				</div>
+            
+	            <div class="cc-display-flex cc-justify-content-space-between" id="" style="flex-grow: 1">
+	                
+	                    <ul class="nav" >
+	                        <li class="nav-item" >
+	                            <a class="nav-link" href="/company/index.html" style="color: #212529; margin-right: 10px; margin-left: 10px">Home</a>
+	                        </li>
+	                        <li class="nav-item">
+	                            <a class="nav-link" href="/company/about.html" style="color: #212529; margin-right: 10px; margin-left: 10px">About</a>
+	                        </li>	
+	                        <li class="nav-item">
+	                            <a class="nav-link" href="/company/contact.html" style="color: #212529; margin-right: 10px; margin-left: 10px">Contact</a>
+	                        </li>
+	                    </ul>
+	 
+	           	</div>
+           		 
+                <div class="" >
+                   
+                    <a class="nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search" style="color: #212529; margin-right: 5px; margin-left: 5px">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                    </a>
+                    <c:choose>
+						<c:when test="${empty sessionScope.loginVO }">			
+							<a href="/user/loginForm" style="color: #212529; font-size: 35px; margin:0 5px" title="로그인">
+								<i class="fa fa-fw fa-sign-in-alt text-dark" title="로그인"></i>
+							</a>								
+							<a href="/user/joinForm" style="color: #212529; font-size: 35px; margin:0 5px" title="회원 가입">
+								<i class="fa fa-fw fa-user-plus text-dark" title="회원 가입"></i>
+							</a>														
+						</c:when>				
+						<c:otherwise>
+							<c:if test="${sessionScope.loginVO.user_id ne 'admin'}">
+							    <a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="장바구니">
+			                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+			                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+	                  			</a>
+	                  			<a class="nav-icon position-relative text-decoration-none" href="/product/likeProduct" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
+			                        <i class="fa fa-fw fa-heart text-dark mr-1"></i>
+			                        <span id="like_sum" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+	                  			</a>				
+								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px; color: #212529;" title="회원 정보">					
+									<i class="fa fa-fw fa-user-edit text-dark"></i>
+								</a>
+							</c:if>
+							<c:if test="${sessionScope.loginVO.user_id eq 'admin'}">	
+								<a href="/product/listForm" style="font-size: 35px; margin:0 5px" title="제품 목록">
+									<i class="fa fa-fw fa-folder-open text-dark" title="제품 목록"></i>
+								</a>				
+								<a href="/product/enrollForm" style="font-size: 35px; margin:0 5px" title="제품 등록">
+									<i class="fa fa-fw fa-folder-plus text-dark" title="제품 등록"></i>
+								</a>
+								<a href="/user/listForm" style="font-size: 35px; margin:0 5px" title="전체 회원 관리">
+									<i class="fa fa-fw fa-users-cog text-dark" title="전체 회원 관리"></i>
+								</a>	
+							</c:if>	
+								<a href="/user/logout" style="color: #212529;font-size: 35px; margin:0 5px" title="로그아웃">
+									<i class="fa fa-fw fa-sign-out-alt text-dark"></i>
+								</a>
+						</c:otherwise>						
+					</c:choose>	
                 </div>
-            </div>
-
         </div>
     </nav>
     <!-- Close Header -->
-
-    <!-- Modal -->
+    
+        <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg cc-display-flex cc-flex-direction-column" role="document">
 	            
@@ -116,7 +181,7 @@
                 <div class="cc-display-flex cc-flex-wrap-nowrap">
                 	<div class="cc-display-flex" style="flex-grow:0.5"></div>
                 		
-                     <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: auto">
+                    <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: auto">
 						<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
 						<input type="hidden" name="currentPage" id="currentPage">
 						<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
@@ -124,7 +189,7 @@
 						</button>
 					</form>
             
-	           		 <form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="width:0" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row">
+	           		<form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="width:0" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row">
 						<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="cc-display-none"> 
 						<button type="button" class="bg-warning" id="btn-upload" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
 		                    <i class="fa fa-fw fa-camera-retro" style="color: #202124"></i>					
@@ -143,9 +208,8 @@
                 <div class="col-md-8 text-white">
                     <h1>About Us</h1>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                       Zay는 세계 최대 규모의 패션 그룹인 Inditex의 대표 브랜드로 전세계에서 가장 큰 패션 브랜드 중 하나입니다.
+						고객은 디자인, 생산, 유통 및 판매를 모두 총괄하는 Zay의 비지니스 모델의 핵심입니다.
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -162,8 +226,7 @@
             <div class="col-lg-6 m-auto">
                 <h1 class="h1">Our Services</h1>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    Lorem ipsum dolor sit amet.
+					생산부터 유통까지 모든 과정을 총괄 담당하고 있습니다. 24시간 고객 맞춤 대응 서비스를 제공합니다.
                 </p>
             </div>
         </div>
@@ -203,7 +266,7 @@
   
 
 
-    <!-- Start Footer -->
+	  <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
             <div class="row">
@@ -213,7 +276,7 @@
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fas fa-map-marker-alt fa-fw"></i>
-                            123 Consectetur at ligula 10660
+                            광주광역시 광산구 무진대로 282
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
@@ -229,24 +292,20 @@
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=남성">Men</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=여성">Women</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=신발">Shoes</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=가방">Bag</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리">Accessory</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Home</a></li>
-                        <li><a class="text-decoration-none" href="#">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
-                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                        <li><a class="text-decoration-none" href="/company/index.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="/company/about.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="/company/contact.html">Contact</a></li>
                     </ul>
                 </div>
 

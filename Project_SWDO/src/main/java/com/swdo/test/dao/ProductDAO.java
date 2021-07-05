@@ -216,4 +216,17 @@ public class ProductDAO {
 		
 		return like_sum;
 	}
+	
+	public ArrayList<String> likeProductSelect(String user_id){
+		ArrayList<String> result = new ArrayList<String>();
+		
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			result = mapper.likeProductSelect(user_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
