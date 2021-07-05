@@ -6,6 +6,11 @@
     <title>Home</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- 앱의 클라이언트 ID 지정 -->
+<meta name="google-signin-client_id" content="261892034263-rlce7a8c3tkb54ou04mkegf8kcgkroll.apps.googleusercontent.com">
+	<!-- google login&out 관련 js를 받아옴 -->
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 
     <link rel="apple-touch-icon" href="./../../resources/img/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="./../../resources/img/favicon.ico">
@@ -17,6 +22,8 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="./../../resources/css/fontawesome.min.css">
+    
+
 
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
@@ -38,7 +45,21 @@ function userImageUpload(){
 	var userImageUpload = document.getElementById("userImageUpload");
 	userImageUpload.submit();
 	document.getElementById("upload").value = "";
-} 
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+}
+
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+    });
+}
+
 </script>	
 </head>
 <body>
@@ -58,7 +79,7 @@ function userImageUpload(){
 					</a>														
 				</c:when>				
 				<c:otherwise>				
-					<a href="user/logout?flag=home" style="font-size: 35px; margin:0 5px" title="로그아웃">
+					<a href="/user/logout" style="font-size: 35px; margin:0 5px" title="로그아웃" onclick="signOut();">
 						<i class="fa fa-fw fa-sign-out-alt text-dark" title="로그아웃"></i>
 					</a>
 				<c:if test="${sessionScope.loginVO.user_id ne 'admin'}">

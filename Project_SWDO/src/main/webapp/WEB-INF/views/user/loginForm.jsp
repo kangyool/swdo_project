@@ -9,6 +9,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- 앱의 클라이언트 ID 지정 -->
+<meta name="google-signin-client_id" content="261892034263-rlce7a8c3tkb54ou04mkegf8kcgkroll.apps.googleusercontent.com">
+<!-- google login&out 관련 js를 받아옴 -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 <link rel="apple-touch-icon" href="./../../../resources/img/apple-icon.png">
 <link rel="shortcut icon" type="image/x-icon" href="./../../../resources/img/favicon.ico">
 
@@ -19,6 +24,7 @@
 <!-- Load fonts style after rendering the layout styles -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
 <link rel="stylesheet" href="./../../../resources/css/fontawesome.min.css">
+
 
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
@@ -40,22 +46,15 @@ function userImageUpload(){
 	document.getElementById("upload").value = "";
 }
 
+function onSignIn(googleUser) {
+	  var profile = googleUser.getBasicProfile();
+	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	  console.log('Name: ' + profile.getName());
+	  console.log('Image URL: ' + profile.getImageUrl());
+	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+
 $(function(){
-
-	//naver loginAPI
-	$(".btn-naverLogin").on("click", function(){
-
-		naverLogin();
-		
-	});
-
-	$(".btn-naverLogout").on("click", function(){
-
-		naverLogout();
-
-	});
-
-		
 
 	//Code to click "imageUpload button"
 	$('#btn-upload').on("click", function(){
@@ -236,22 +235,15 @@ $(function(){
                 </div>
                 <div class="row">
                     <div class="" style="width:10%;visibility: hidden"></div>
-                    <div class="form-group col-md-6 mb-3" style="width:75%;margin-top:10px">
-                        <button type="submit" class="btn btn-success px-3" style="width:100%">로그인</button>
+                    <div class="form-group col-md-6 mb-3 cc-display-flex" style="width:75%;margin-top:10px">
+                        <button type="submit" class="btn btn-success px-3" style="width:100%;">로그인</button>
                     </div>
                     <div class="" style="width:10%;visibility: hidden"></div>
                 </div>
                 <div class="row">
                     <div class="" style="width:10%;visibility: hidden"></div>
-                    <div class="form-group col-md-6 mb-3" style="width:75%;margin-top:10px">
-                        <button type="submit" class="btn-naverLogin" style="width:100%">네이버 로그인</button>
-                    </div>
-                    <div class="" style="width:10%;visibility: hidden"></div>
-                </div>
-                 <div class="row">
-                    <div class="" style="width:10%;visibility: hidden"></div>
-                    <div class="form-group col-md-6 mb-3" style="width:75%;margin-top:10px">
-                        <button type="submit" class="btn-naverLogout" style="width:100%">네이버 로그아웃</button>
+                    <div class="form-group col-md-6 mb-3" style="width:75%;margin-top:10px" >
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     </div>
                     <div class="" style="width:10%;visibility: hidden"></div>
                 </div>
