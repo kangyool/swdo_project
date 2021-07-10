@@ -9,6 +9,11 @@
     <title>Zay Shop - Product Detail Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <!-- 앱의 클라이언트 ID 지정 -->
+<meta name="google-signin-client_id" content="261892034263-rlce7a8c3tkb54ou04mkegf8kcgkroll.apps.googleusercontent.com">
+	<!-- google login&out 관련 js를 받아옴 -->
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 
     <link rel="apple-touch-icon" href="./../../../resources/img/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="./../../../resources/img/favicon.ico">
@@ -24,6 +29,22 @@
 
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
+
+//구글 로그아웃 시작
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+}
+
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+    });
+}
+//구글 로그아웃 끝
+
 function searchProduct(page){
 	document.getElementById("currentPage").value = page;
 	var searchForm = document.getElementById("searchForm");
@@ -219,7 +240,7 @@ $(function(){
 									<i class="fa fa-fw fa-users-cog text-dark" title="전체 회원 관리"></i>
 								</a>	
 							</c:if>	
-								<a href="/user/logout" style="color: #212529;font-size: 35px; margin:0 5px" title="로그아웃">
+								<a href="/user/logout" style="color: #212529;font-size: 35px; margin:0 5px" title="로그아웃" onclick="signOut();">
 									<i class="fa fa-fw fa-sign-out-alt text-dark"></i>
 								</a>
 						</c:otherwise>						

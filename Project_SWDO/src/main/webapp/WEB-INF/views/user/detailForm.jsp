@@ -29,7 +29,7 @@
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
 
-function signOut() {
+/* function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -41,7 +41,7 @@ function onLoad() {
       gapi.auth2.init();
     });
 }
-
+ */
 window.onload = function () { 
 	var cnt_str = document.getElementById("cnt_str").value;
 
@@ -62,7 +62,7 @@ function userUpdate(user_id){
 function userDelete(user_id){
 	var flag = confirm("정말로 탈퇴하시겠습니까?")
 	if(flag){
-		signOut();
+		/* signOut(); */
 		location.href = "/user/delete?user_id=" + user_id;
 	}	
 }

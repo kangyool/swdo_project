@@ -47,6 +47,7 @@ function userImageUpload(){
 	document.getElementById("upload").value = "";
 }
 
+//구글 로그아웃 시작
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
@@ -59,6 +60,7 @@ function onLoad() {
       gapi.auth2.init();
     });
 }
+//구글 로그아웃 끝
 
 </script>	
 </head>

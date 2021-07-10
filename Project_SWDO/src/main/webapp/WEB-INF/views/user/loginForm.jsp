@@ -46,13 +46,42 @@ function userImageUpload(){
 	document.getElementById("upload").value = "";
 }
 
+//구글 로그인 시작
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 	  console.log('Name: ' + profile.getName());
 	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.	
+
+	  var id_token = googleUser.getAuthResponse().id_token;
+
+      /*		 
+	  var id_token_jsonData = JSON.stringify(id_token); */
+	  
+	  /* var xhr = new XMLHttpRequest();
+	  xhr.open('POST', '/user/googleLogin');
+	  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	  xhr.onload = function() {
+	    console.log('Signed in as: ' + xhr.responseText);
+	  };
+	  xhr.send('idtoken=' + id_token); */
+
+	  $.ajax({
+	        type : 'post',
+	        url : '/user/googleLogin',
+	        data : id_token,
+	        error: function(e){
+	        	console.log(e);
+	        },
+	        success : function(data){
+	            location.href = "/product/productListForm";
+	            
+	        },
+	   });
+	  
 }
+//구글 로그인 종료
 
 $(function(){
 

@@ -110,5 +110,10 @@ public class UserService {
 		return path;
 	}
 	
+	public void userGoogleLogin(UserVO user) {
+		session.setAttribute("loginVO", user);
+		System.out.println("구글 로그인 성공");
+	}
+	
 
 }
