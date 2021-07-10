@@ -24,8 +24,12 @@ $(function(){
 		var productId = $("#productId").val();
 		var productDisplayName = $("#productDisplayName").val();
 		var referenceImageId = $("#referenceImageId").val();
-		var gcsUri = $("#gcsUri").val();		
+		var gcsUri = $("#gcsUri").val();
 
+		var	productDescription = $("#productDescription").val();
+		var productSpecification = $("#productSpecification").val();
+		var productPrice = $("#productPrice").val();
+		
 		$.ajax({
 				url : "/product/enroll",
 				type : "post",
@@ -38,7 +42,11 @@ $(function(){
 					productDisplayName : productDisplayName,
 					productCategory : productCategory,
 					referenceImageId : referenceImageId,
-					gcsUri : gcsUri
+					gcsUri : gcsUri,
+					productDescription : productDescription,
+					productSpecification : productSpecification,
+					productPrice : productPrice
+					
 				},
 				dataType : "json",
 				success : function(data){
@@ -85,11 +93,11 @@ $(function(){
 			<tbody>
 				<tr>
 					<td><label for="productId">제품 아이디</label></td>
-					<td><input type="text" id="productId" name="productId" value="productId-001"></td>
+					<td><input type="text" id="productId" name="productId" value=""></td>
 				</tr>
 				<tr>
 					<td><label for="productDisplayName">제품명</label></td>
-					<td><input type="text" id="productDisplayName" name="productDisplayName" value="빨간색 스웨터 (여성)"></td>
+					<td><input type="text" id="productDisplayName" name="productDisplayName" value=""></td>
 				</tr>
 				<tr>
 					<td><label for="referenceImageId">참조이미지 아이디</label></td>
@@ -97,7 +105,19 @@ $(function(){
 				</tr>
 				<tr>
 					<td><label for="gcsUri">참조이미지 경로</label></td>
-					<td><input type="text" id="gcsUri" name="gcsUri" value="gs://project_swdo/파일명.jpg"></td>
+					<td><input type="text" id="gcsUri" name="gcsUri" value="gs://project_swdo/파일명.png"></td>
+				</tr>
+				<tr>
+					<td><label for="gcsUri">제품 상세설명</label></td>
+					<td><input type="text" id="productDescription" name="productDescription" value=""></td>
+				</tr>
+				<tr>
+					<td><label for="gcsUri">제품 소재</label></td>
+					<td><input type="text" id="productSpecification" name="productSpecification" value=""></td>
+				</tr>
+				<tr>
+					<td><label for="gcsUri">제품 가격</label></td>
+					<td><input type="text" id="productPrice" name="productPrice" value=""></td>
 				</tr>
 				
 				<input type = "hidden" class="projectId" value="snappy-guard-316800">

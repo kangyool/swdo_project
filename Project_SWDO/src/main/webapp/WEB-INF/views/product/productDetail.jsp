@@ -38,7 +38,6 @@ function userImageUpload(){
 
 	userImageUpload.submit();
 
-	document.getElementById("upload").value = "";
 } 
 
 $(function(){
@@ -278,7 +277,7 @@ $(function(){
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2">${detail.productDisplayName }</h1>
-                            <p class="h3 py-2">$25.00</p>
+                            <p class="h3 py-2">${detail.productPrice }</p>
                             <p class="py-2">
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-warning"></i>
@@ -289,11 +288,11 @@ $(function(){
                             </p>                          
 
                             <h6>Description:</h6>
-                            <p>내용채우기 내용채우기 내용채우기 내용채우기</p>
+                            <p>${detail.productDescription }</p>
 
                             <h6>Specification:</h6>
                             <ul class="list-unstyled pb-3">
-                                <li>내용채우기 내용채우기 내용채우기</li>
+                                <li>${detail.productSpecification }</li>
                             </ul>
 
                             <form action="" method="GET">
@@ -384,7 +383,7 @@ $(function(){
                                     <i class="text-muted fa fa-star"></i>
                                 </li>
                             </ul>
-                            <p class="text-center mb-0">$250.00</p>
+                            <p class="text-center mb-0">${related.productPrice }</p>
                         </div>
                     </div>
                		</div>

@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
     <title>ProductLike_list</title>
-    <meta charset="utf-8">
+  	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="./../../../resources/img/apple-icon.png">
@@ -22,16 +22,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="./../../../resources/css/fontawesome.min.css">
 
+
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
-var flag=true;
-
-function moveToHome(){
-	location.href = "/";
-}
 
 function searchProduct(page){
-	document.getElementById("age").value = page;
+	document.getElementById("currentPage").value = page;
 	var searchForm = document.getElementById("searchForm");
 
 	searchForm.submit();
@@ -44,10 +40,14 @@ function userImageUpload(){
 
 	userImageUpload.submit();
 
-	document.getElementById("upload").value = "";
 } 
 
 $(function(){
+
+	//Code to click "imageUpload button"
+	$('#btn-upload').on("click", function(){
+		$("#upload").click();
+	});
 
 	//Start 'like' function 
 	$(document).on("click", ".btn_like", function(){
@@ -65,14 +65,16 @@ $(function(){
 			},
 			success : function(data){
 				console.log(data);
-				if(data.like_check_new == 1){
+
+				likeProductSelect();
+				
+/* 				if(data.like_check_new == 1){
 					$("." + data.productId).attr('style', 'color:red');					
 				}else{
 					$("." + data.productId).attr('style', 'color:white');
-				}
+				} */
 
 				$("#like_sum").html(data.like_sum); //오른쪽 상단 하트로 날아가는 에니메이션?
-				likeProductSelect();
 			},
 			error : function(e){
 				console.log(e);
@@ -86,7 +88,7 @@ $(function(){
 		
 		var productId = $(this).attr('id');
 
-		/* alert(productId); */
+		//alert(productId);
 		
 		$.ajax({
 
@@ -103,7 +105,6 @@ $(function(){
 				}else{
 					$("." + data.productId).attr('style', 'color:white');
 				}
-
 			},
 			error : function(e){
 				console.log(e);
@@ -121,7 +122,7 @@ $(function(){
 			type : "get",
 			success : function(data){
 				console.log(data);
-				$("#like_sum").html(data.like_sum); //에니메이션 효과?
+				$("#like_sum").html(data.like_sum); 
 			},
 			error : function(e){
 				console.log(e);
@@ -168,7 +169,7 @@ $(function(){
 			content += '<a href="/product/productDetail?productId=' + item.productId + '" class="h3 text-decoration-none">' + item.productDisplayName + '</a>'
 			content += '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0"> <li>M/L/X/XL</li> <li class="pt-2"> <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span> </li> </ul>'
 			content += '<ul class="list-unstyled d-flex justify-content-center mb-1"><li><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-muted fa fa-star"></i><i class="text-muted fa fa-star"></i></li></ul>'
-			content += '<p class="text-center mb-0">$250.00</p>'
+			content += '<p class="text-center mb-0">' + item.productPrice + '</p>'
 			content += '</div>'
 			content += '</div>'
 			content += '</div>'			
@@ -232,7 +233,7 @@ $(function(){
 </script>
 </head>
 <body>
-   <!-- Start Top Nav -->
+    <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-lg-block cc-flex-wrap-nowrap" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
@@ -299,11 +300,11 @@ $(function(){
 			                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
 			                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 	                  			</a>
-	                  			<a class="nav-icon position-relative text-decoration-none" href="#" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
+	                  			<a class="nav-icon position-relative text-decoration-none" href="/product/likeProduct" style="margin-right: 5px; margin-left: 5px" title="찜한상품">
 			                        <i class="fa fa-fw fa-heart text-dark mr-1"></i>
 			                        <span id="like_sum" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 	                  			</a>				
-								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px; color: #212529" title="회원 정보">					
+								<a href="/user/detail?user_id=${sessionScope.loginVO.user_id }" style="font-size: 35px; margin:0 5px; color: #212529;" title="회원 정보">					
 									<i class="fa fa-fw fa-user-edit text-dark"></i>
 								</a>
 							</c:if>
@@ -327,6 +328,38 @@ $(function(){
         </div>
     </nav>
     <!-- Close Header -->
+    
+        <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg cc-display-flex cc-flex-direction-column" role="document">
+	            
+	            
+	            <div class="w-100 pt-1 mb-5 text-right cc-display-flex ">                
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+	            </div>
+
+                <div class="cc-display-flex cc-flex-wrap-nowrap">
+                	<div class="cc-display-flex" style="flex-grow:0.5"></div>
+                		
+                    <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: auto">
+						<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
+						<input type="hidden" name="currentPage" id="currentPage">
+						<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
+							<i class="fa fa-fw fa-search" style="color: #202124"></i>
+						</button>
+					</form>
+            
+	           		<form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="width:0" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row">
+						<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="cc-display-none"> 
+						<button type="button" class="bg-warning" id="btn-upload" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
+		                    <i class="fa fa-fw fa-camera-retro" style="color: #202124"></i>					
+						</button>
+					</form>
+                </div>
+         		
+        </div>
+    </div>
+
     
         <!-- Start Content Page -->
     <div class="container-fluid bg-light py-5">
@@ -406,7 +439,7 @@ $(function(){
 	                                        <i class="text-muted fa fa-star"></i>
 	                                    </li>
 	                                </ul>
-	                                <p class="text-center mb-0">$250.00</p>
+	                                <p class="text-center mb-0">${productList.productPrice }</p>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -419,43 +452,7 @@ $(function(){
         </div>
     </div>
     <!-- End Content -->
-    
-    
-
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg cc-display-flex cc-flex-direction-column" role="document">
-	            
-	            
-	            <div class="w-100 pt-1 mb-5 text-right cc-display-flex ">                
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-	            </div>
-
-                <div class="cc-display-flex cc-flex-wrap-nowrap">
-                	<div class="cc-display-flex" style="flex-grow:0.5"></div>
-                		
-                    <form action="/product/productListForm" method="get" id="searchForm" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row" style="width: auto">
-						<input type="text" name="searchText" placeholder="   Search ..." class="cc-focus-border-none shadow" style="flex-grow: 1;border-top-left-radius: 10px;border-bottom-left-radius: 10px; border-right:0px; border-top:1px solid #E2E2E2; border-left:1px solid #E2E2E2; border-bottom:1px solid #E2E2E2;">
-						<input type="hidden" name="age" id="age">
-						<button type="button" onclick="searchProduct(1)" class="bg-success" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2">
-							<i class="fa fa-fw fa-search" style="color: #202124"></i>
-						</button>
-					</form>
-            
-	           		<form action="/product/userImageUpload" method="post" id="userImageUpload" enctype="multipart/form-data" style="width:0" class="cc-display-flex modal-content modal-body border-0 p-0 cc-flex-direction-row">
-						<input type = "file" name="upload" id="upload" onchange="userImageUpload()" class="cc-display-none"> 
-						<button type="button" class="bg-warning" id="btn-upload" style="border-right:0px; border-top:1px solid #E2E2E2; border-left:0px; border-bottom:1px solid #E2E2E2;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
-		                    <i class="fa fa-fw fa-camera-retro" style="color: #202124"></i>					
-						</button>
-					</form>
-                </div>
-         		
-        </div>
-    </div>
-
-	<input type="hidden" value="${searchText }" id="st">
-	<input type="hidden" value="${navi.age }" id="cp">	
-	<input type="hidden" value="${navi.totalPageCount }" id="tpc">
+ 
 	
 	  <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
@@ -483,20 +480,20 @@ $(function(){
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Men</a></li>
-                        <li><a class="text-decoration-none" href="#">Women</a></li>
-                        <li><a class="text-decoration-none" href="#">Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Bag</a></li>
-                        <li><a class="text-decoration-none" href="#">Accessory</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=남성">Men</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=여성">Women</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=신발">Shoes</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=가방">Bag</a></li>
+                        <li><a class="text-decoration-none" href="/product/productListForm?searchText=악세서리">Accessory</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Home</a></li>
-                        <li><a class="text-decoration-none" href="#">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                        <li><a class="text-decoration-none" href="/company/index.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="/company/about.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="/company/contact.html">Contact</a></li>
                     </ul>
                 </div>
 
@@ -547,8 +544,8 @@ $(function(){
 
     </footer>
     <!-- End Footer -->
-	
-	<!-- Start Script -->
+
+    <!-- Start Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="./../../../resources/js/templatemo.js"></script>
     <script src="./../../../resources/js/custom.js"></script>

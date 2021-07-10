@@ -151,7 +151,7 @@ $(function(){
 			content += '<a href="/product/productDetail?productId=' + item.productId + '" class="h3 text-decoration-none">' + item.productDisplayName + '</a>'
 			content += '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0"> <li>M/L/X/XL</li> <li class="pt-2"> <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span> </li> </ul>'
 			content += '<ul class="list-unstyled d-flex justify-content-center mb-1"><li><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-muted fa fa-star"></i><i class="text-muted fa fa-star"></i></li></ul>'
-			content += '<p class="text-center mb-0">$250.00</p>'
+			content += '<p class="text-center mb-0">' + item.productPrice + '</p>'
 			content += '</div>'
 			content += '</div>'
 			content += '</div>'			
@@ -178,7 +178,8 @@ $(function(){
 		console.log("scrollHeight : " + scrollHeight);
 		console.log("documentHeight : " + documentHeight);
 		console.log("currentPage! : " + currentPage);
-
+		console.log("totalPageCount : " + totalPageCount);
+		
 		console.log("userImage : " + userImage);
 		
 		if(scrollHeight >= (documentHeight*0.001) && currentPage <= totalPageCount){ 
@@ -381,7 +382,7 @@ $(function(){
 	                                        <i class="text-muted fa fa-star"></i>
 	                                    </li>
 	                                </ul>
-	                                <p class="text-center mb-0">$250.00</p>
+	                                <p class="text-center mb-0">${productList.productPrice }</p>
 	                            </div>
 	                        </div>
 	                    </div>

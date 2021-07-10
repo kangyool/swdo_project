@@ -13,12 +13,18 @@
 		    ,referenceImageId
 		    ,gcsUri
 		    ,uri
+		    ,productDescription
+		    ,productSpecification
+		    ,productPrice
 		)values(
 			#{productId}
 			,#{productDisplayName}
 		    ,#{referenceImageId}
 		    ,#{gcsUri}
 		    ,#{uri}
+		    ,#{productDescription}
+		    ,#{productSpecification}
+		    ,#{productPrice}
 		)
 </insert>
 
@@ -38,7 +44,9 @@
 	where
 		upper(productDisplayName) like '%'||upper(#{searchText})||'%'
 		or
-		upper(productId) like '%'||upper(#{searchText})||'%' 
+		upper(productId) like '%'||upper(#{searchText})||'%'
+		or
+		upper(productDescription) like '%'||upper(#{searchText})||'%'  
 	</if>
 	
 </select>
@@ -50,6 +58,9 @@
 		,referenceImageId
 		,gcsUri
 		,uri
+		,productDescription
+		,productSpecification
+		,productPrice
 	from
 		SWDO_product_tb
 	<if test="_parameter != null"> <!-- 매개 변수 하나 전달 || VO를 통하지 않고 받을 때 -->
@@ -58,6 +69,8 @@
 		upper(productDisplayName) like '%'||upper(#{searchText})||'%' 
 		or
 		upper(productId) like '%'||upper(#{searchText})||'%' 
+		or
+		upper(productDescription) like '%'||upper(#{searchText})||'%'  
 	
 	</if>
 </select>
@@ -94,6 +107,9 @@
 		,referenceImageId
 		,gcsUri
 		,uri
+		,productDescription
+		,productSpecification
+		,productPrice
 	from
 		SWDO_product_tb
 	where productId in (
@@ -116,6 +132,9 @@
 		,referenceImageId
 		,gcsUri
 		,uri
+		,productDescription
+		,productSpecification
+		,productPrice
 	from
 		SWDO_product_tb
 	where

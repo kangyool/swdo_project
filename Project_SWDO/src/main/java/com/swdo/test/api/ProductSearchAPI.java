@@ -52,7 +52,7 @@ public class ProductSearchAPI {
 		          String.format(
 		              "Product id: %s",
 		              product.getName().substring(product.getName().lastIndexOf('/') + 1)));
-		      System.out.println(String.format("Product display name: %s", product.getDisplayName()));
+		      System.out.println(String.format("Product displayName: %s", product.getDisplayName()));
 		      System.out.println(String.format("Product category: %s", product.getProductCategory()));
 		      System.out.println("Product labels:");
 		      System.out.println(
@@ -91,6 +91,8 @@ public class ProductSearchAPI {
 	      
 		    //제품 정보를 저장하기 위한 arrayList 선언 
 		    ArrayList<String> result = new ArrayList<String>();
+		    
+
 	      
 		    try (ImageAnnotatorClient queryImageClient = ImageAnnotatorClient.create()) {
 
@@ -132,6 +134,7 @@ public class ProductSearchAPI {
 		      
 		      List<Result> similarProducts =
 		          response.getResponses(0).getProductSearchResults().getResultsList();
+		      System.out.println(String.format("입력 이미지 : %s", filePath));
 		      System.out.println("Similar Products: ");
 		      for (Result product : similarProducts) {
 		        System.out.println(String.format("\nProduct name: %s", product.getProduct().getName()));
@@ -146,7 +149,7 @@ public class ProductSearchAPI {
 		        int index = product.getProduct().getName().lastIndexOf("/");
 		        
 		        //제품 정보를 result에 저장
-		        if(product.getScore() >= 0.01 && product.getScore() != 1)
+		        if(product.getScore() >= 0.30)
 		        	result.add(product.getProduct().getName().substring(index+1));
 		      }
 		    }

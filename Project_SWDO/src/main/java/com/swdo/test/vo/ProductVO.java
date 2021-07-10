@@ -20,4 +20,8 @@ public class ProductVO {
    private String gcsUri;
     
    private String uri;
+   
+   private String productDescription;
+   private String productSpecification;
+   private String productPrice;
 }

@@ -77,9 +77,16 @@ public class ProductViewController {
 		
 		PageNavigator navi = new PageNavigator(currentPage, totalRecordsCount, COUNT_PER_PAGE);
 		
+		System.out.println(navi.getTotalPageCount());
+		System.out.println(navi.getTotalPageCount());
+		System.out.println(navi.getTotalPageCount());
+		
+		
 		navi.setCurrentPage(navi.getCurrentPage() + 1); 
 		
 		ArrayList<ProductVO> result = service.productSelectAll(searchText, navi.getStartRecord(), COUNT_PER_PAGE);
+		
+		System.out.println(result);
 		
 		model.addAttribute("productList", result);
 		model.addAttribute("searchText", searchText);

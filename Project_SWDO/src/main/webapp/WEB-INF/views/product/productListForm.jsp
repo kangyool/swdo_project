@@ -67,9 +67,9 @@ $(function(){
 			success : function(data){
 				console.log(data);
 				if(data.like_check_new == 1){
-					$("." + data.productId).attr('style', 'color:red');					
+					$('.' + data.productId).attr('style', 'color:red');			
 				}else{
-					$("." + data.productId).attr('style', 'color:white');
+					$('.' + data.productId).attr('style', 'color:white');	
 				}
 
 				$("#like_sum").html(data.like_sum); //오른쪽 상단 하트로 날아가는 에니메이션?
@@ -99,9 +99,9 @@ $(function(){
 				//console.log(data);
 
 				if(data.like_check_cur == 1){
-					$("." + data.productId).attr('style', 'color:red');
+					$('.' + data.productId).attr('style', 'color:red');			
 				}else{
-					$("." + data.productId).attr('style', 'color:white');
+					$('.' + data.productId).attr('style', 'color:white');			
 				}
 			},
 			error : function(e){
@@ -151,7 +151,7 @@ $(function(){
 			content += '<a href="/product/productDetail?productId=' + item.productId + '" class="h3 text-decoration-none">' + item.productDisplayName + '</a>'
 			content += '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0"> <li>M/L/X/XL</li> <li class="pt-2"> <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span> <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span> </li> </ul>'
 			content += '<ul class="list-unstyled d-flex justify-content-center mb-1"><li><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-warning fa fa-star"></i><i class="text-muted fa fa-star"></i><i class="text-muted fa fa-star"></i></li></ul>'
-			content += '<p class="text-center mb-0">$250.00</p>'
+			content += '<p class="text-center mb-0">' + item.productPrice + '</p>'
 			content += '</div>'
 			content += '</div>'
 			content += '</div>'			
@@ -180,7 +180,7 @@ $(function(){
 		console.log("totalPageCount : " + totalPageCount);
 		
 		if(scrollHeight >= (documentHeight*0.001) && currentPage <= totalPageCount){ 
-			console.log("currentPage : " + currentPage);
+			console.log("currentPage!!! : " + currentPage);
 
 			if (flag) {
 				flag = false;
@@ -382,7 +382,7 @@ $(function(){
 	                                        <i class="text-muted fa fa-star"></i>
 	                                    </li>
 	                                </ul>
-	                                <p class="text-center mb-0">$250.00</p>
+	                                <p class="text-center mb-0">${productList.productPrice }</p>
 	                            </div>
 	                        </div>
 	                    </div>
