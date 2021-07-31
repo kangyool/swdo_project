@@ -29,7 +29,8 @@
 <script type="text/javascript" src = "/resources/js/jquery-3.6.0.js"></script>   
 <script type="text/javascript">
 
-/* function signOut() {
+//구글 로그아웃 시작
+function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -41,7 +42,8 @@ function onLoad() {
       gapi.auth2.init();
     });
 }
- */
+//구글 로그아웃 끝
+
 window.onload = function () { 
 	var cnt_str = document.getElementById("cnt_str").value;
 

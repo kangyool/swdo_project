@@ -33,9 +33,9 @@ $(function(){
 	});
 });
     
-function changeValue(obj){
+/* function changeValue(obj){
 	userImageUpload();
-}
+} */
 function searchProduct(page){
 	document.getElementById("currentPage").value = page;
 	var searchForm = document.getElementById("searchForm");
@@ -111,7 +111,7 @@ function onLoad() {
 	
 	<div class="cc-display-flex cc-disposition-center cc-flex-direction-column" >
 		<div class="cc-display-flex">
-			<img alt="" src="./../../resources/img/apple-icon.png" height="100px" width="120px">
+			<img alt="" src="./../../resources/img/apple-icon.png" height="100px" width="110px">
 		</div>
 		
 	    <div class="cc-display-flex cc-flex-wrap-nowrap">
